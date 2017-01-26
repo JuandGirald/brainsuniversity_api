@@ -1,5 +1,6 @@
 module Api::V1
   class UsersController < ApiController
+    skip_before_action :authenticate!, only: [:create]
     before_action :set_user, only: [:show, :update, :destroy]
 
     # GET /users
@@ -19,7 +20,7 @@ module Api::V1
       @user = User.new(user_params)
 
       if @user.save
-        render json: @user, status: :created, location: @user
+        render json: @user
       else
         render json: @user.errors, status: :unprocessable_entity
       end
@@ -37,6 +38,7 @@ module Api::V1
     # DELETE /users/1
     def destroy
       @user.destroy
+      render json: { status: "User successfully deleted" }
     end
 
     private

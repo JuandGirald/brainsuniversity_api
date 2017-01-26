@@ -2,7 +2,7 @@ module Api::V1
 	class AuthController < ApiController
 		include Sorcery::Controller
 
-		skip_before_filter :authenticate!, only: [:authenticate]
+		skip_before_action :authenticate!, only: [:authenticate]
 		
 		def authenticate
 		  user = login(params[:username], params[:password])
