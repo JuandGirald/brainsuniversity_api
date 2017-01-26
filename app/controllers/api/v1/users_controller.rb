@@ -1,5 +1,7 @@
 module Api::V1
   class UsersController < ApiController
+    include Api::V1::UsersDoc
+
     skip_before_action :authenticate!, only: [:create]
     before_action :set_user, only: [:show, :update, :destroy]
 
