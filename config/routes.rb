@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  apipie
 	scope module: "api" do
 	  namespace :v1, path: "" do
 	    resources :users

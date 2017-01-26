@@ -1,6 +1,7 @@
 module Api::V1
 	class AuthController < ApiController
 		include Sorcery::Controller
+		include Api::V1::AuthDoc
 
 		skip_before_action :authenticate!, only: [:authenticate]
 
@@ -13,7 +14,7 @@ module Api::V1
 		    token = user.token
 		    render json: { status: "OK",  auth_token: token, user_id: user.id }
 		  else
-		    render json: { status: "Error" }, status: :unauthorized
+		    render json: { status: "Bad credentials" }, status: :unauthorized
 		  end
 		end
 

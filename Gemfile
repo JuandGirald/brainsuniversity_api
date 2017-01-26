@@ -52,3 +52,6 @@ gem 'validates_email_format_of'
 
 # JWT (short for JSON Web Token)
 gem 'jwt'  
+
+# API documentation
+gem 'apipie-rails'

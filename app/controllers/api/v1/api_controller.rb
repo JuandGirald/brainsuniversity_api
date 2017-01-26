@@ -16,7 +16,7 @@ module Api::V1
 		    payload, header = TokenProvider.valid?(token)
 		    @current_user = User.find_by(id: payload['user_id'])
 		  rescue
-		    render_unauthorized
+		  	render_unauthorized
 		  end
 		end
 
@@ -25,12 +25,16 @@ module Api::V1
 		end
 
 		def token
-		  request.headers['Authorization'].split(' ').last
+			if headers['Authorization'].present?
+				request.headers['Authorization'].split(' ').last
+			else
+				errors.add(:token, 'Missing token')
+			end
 		end
 
 		def render_unauthorized(realm = "Application")
 		  self.headers["WWW-Authenticate"] = %(Token realm="#{realm.gsub(/"/, "")}")
-		  render json: 'Bad credentials', status: :unauthorized
+		  render json: 'Invalid Token Or not authorized', status: :unauthorized
 		end
 	end
 end
