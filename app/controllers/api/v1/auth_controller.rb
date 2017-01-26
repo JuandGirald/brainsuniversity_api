@@ -3,7 +3,7 @@ module Api::V1
 		include Sorcery::Controller
 
 		skip_before_action :authenticate!, only: [:authenticate]
-		
+
 		def authenticate
 		  user = login(params[:username], params[:password])
 		  if user 
