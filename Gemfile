@@ -58,3 +58,6 @@ gem 'jwt'
 
 # API documentation
 gem 'apipie-rails'
+
+# Serialize json response
+gem 'active_model_serializers', '~> 0.10.0'
