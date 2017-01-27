@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108102005) do
+ActiveRecord::Schema.define(version: 20170126231344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",            null: false
+    t.string   "email",                          null: false
     t.string   "crypted_password"
     t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
+    t.string   "role",             default: "3", null: false
+    t.string   "type"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 

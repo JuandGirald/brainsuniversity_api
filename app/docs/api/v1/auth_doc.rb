@@ -5,11 +5,9 @@ module Api::V1::AuthDoc
   
   doc_for :authenticate do
     api :POST, '/session', 'Log In'
-    param :user, Hash, :desc => "User info", :required => true do
-      param :username, String, :required => true
-      param :password, String, :required => true
-    end
-    error code: 401, desc: 'Unauthorized'
+    param :email, String, :required => true
+    param :password, String, :required => true
+    error code: 401, desc: 'Bad credentials'
   end
 
   doc_for :logout do

@@ -47,6 +47,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Magic authentication
 gem 'sorcery' 
 
+#Roles!
+gem 'cancancan'
+
 # Email format validator
 gem 'validates_email_format_of'
 
