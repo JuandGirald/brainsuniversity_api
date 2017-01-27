@@ -6,6 +6,11 @@ class User < ApplicationRecord
 	validates :password, length: { minimum: 6 }, on: :create
  	validates :email, uniqueness: true, email_format: true
 
+ 	enum role: { admin: '1',
+               teacher: '2',
+               student: '3'
+             }
+
 	def represent_user_with_token
 	  self.update(token: ::TokenProvider.issue_token(
 	    user_id: self.id

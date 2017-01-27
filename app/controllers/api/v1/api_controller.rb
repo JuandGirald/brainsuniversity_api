@@ -1,5 +1,6 @@
 module Api::V1
 	class ApiController < ApplicationController
+		load_and_authorize_resource
 		before_action :authenticate!
 		
 		def validate_token!
@@ -25,11 +26,7 @@ module Api::V1
 		end
 
 		def token
-			if headers['Authorization'].present?
-				request.headers['Authorization'].split(' ').last
-			else
-				errors.add(:token, 'Missing token')
-			end
+			request.headers['Authorization'].split(' ').last
 		end
 
 		def render_unauthorized(realm = "Application")

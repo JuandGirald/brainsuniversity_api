@@ -44,6 +44,7 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.6)
+    cancancan (1.15.0)
     concurrent-ruby (1.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -172,6 +173,7 @@ PLATFORMS
 DEPENDENCIES
   apipie-rails
   byebug
+  cancancan
   factory_girl_rails
   jwt
   listen (~> 3.0.5)

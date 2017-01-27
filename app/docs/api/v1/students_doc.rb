@@ -1,22 +1,17 @@
-module Api::V1::UsersDoc
+module Api::V1::StudentsDoc
   extend BaseDoc
 
   namespace 'api/v1'
-  resource :users
+  resource :students
 
   doc_for :show do
-    api :GET, '/users/:id', 'Display an User'
+    api :GET, '/students/:id', 'Display a student'
     param :id, Integer, :required => true
     auth_with :token
   end
 
-  doc_for :index do
-    api :GET, '/users', 'Display all Users'
-    auth_with :token
-  end
-
   doc_for :create do
-    api :POST, '/users', 'Create an User'
+    api :POST, '/students', 'Create a Student'
     param :user, Hash, :desc => "User info", :required => true do
       param :email, String, :required => true
       param :password, String, :required => true
@@ -24,13 +19,7 @@ module Api::V1::UsersDoc
   end
 
   doc_for :update do
-    api :PUT, '/users/:id', 'Update an User'
-    param :id, Integer, :required => true
-    auth_with :token
-  end
-
-  doc_for :destroy do
-    api :DELETE, '/users/:id', 'Destroy an User'
+    api :PUT, '/students/:id', 'Update a Student'
     param :id, Integer, :required => true
     auth_with :token
   end
