@@ -25,9 +25,4 @@ class User < ApplicationRecord
 	def delete_token
 		self.update(token: nil)
 	end
-
-	def as_json(options={})
- 		options[:except] ||= [:token, :crypted_password, :salt]
- 		super(options)
-	end
 end
