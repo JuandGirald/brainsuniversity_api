@@ -13,7 +13,7 @@ class Ability
       can [:read, :update], User, id: user.id
     else
       can [:read, :create], Teacher 
-      # can [:create], Student
+      can [:create], Student
     end
     # Define abilities for the passed in user here. For example:
     #

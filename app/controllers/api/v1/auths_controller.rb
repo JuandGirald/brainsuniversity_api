@@ -1,5 +1,5 @@
 module Api::V1
-	class AuthController < ApiController
+	class AuthsController < ApiController
 		include Sorcery::Controller
 		include Api::V1::AuthDoc
 

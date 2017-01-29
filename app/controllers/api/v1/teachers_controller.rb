@@ -2,6 +2,7 @@ module Api::V1
   class TeachersController < ApiController
   	include Api::V1::TeachersDoc
 
+    load_and_authorize_resource
     skip_before_action :authenticate!, only: [:create]
     before_action :set_user, only: [:show, :update]
 
@@ -12,7 +13,7 @@ module Api::V1
 
     # POST /users
     def create
-      @user = Teacher.new(user_params)
+      @user = Teacher.new(teacher_params)
 
       if @user.save
         render json: @user
@@ -23,7 +24,7 @@ module Api::V1
 
     # PATCH/PUT /users/1
     def update
-      if @user.update(user_params)
+      if @user.update(teacher_params)
         render json: @user
       else
         render json: @user.errors, status: :unprocessable_entity
@@ -37,7 +38,7 @@ module Api::V1
       end
 
       # Only allow a trusted parameter "white list" through.
-      def user_params
+      def teacher_params
         params.require(:teacher).permit(:password, :email)
       end
   end
