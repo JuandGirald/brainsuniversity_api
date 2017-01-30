@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 	include TokenProvider
-	authenticates_with_sorcery!
+	has_secure_password
 
 	after_create :set_auth_token 
 	validates :password, length: { minimum: 6 }, on: :create
@@ -11,10 +11,11 @@ class User < ApplicationRecord
                student: '3'
              }
 
-	def represent_user_with_token
-	  self.update(token: ::TokenProvider.issue_token(
+	def represent_user_with_token(token=nil)
+		token ||= ::TokenProvider.encode(
 	    user_id: self.id
-	  ))
+	  )
+	  self.update(token: token)
 	end
 
 	def set_auth_token

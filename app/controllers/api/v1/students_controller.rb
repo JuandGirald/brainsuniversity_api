@@ -2,8 +2,8 @@ module Api::V1
   class StudentsController < ApiController
   	include Api::V1::StudentsDoc
 
-    # load_and_authorize_resource
-    skip_before_action :authenticate!, only: [:create]
+    load_and_authorize_resource except: [:create]
+    skip_before_action :authenticate_request, only: [:create]
     before_action :set_user, only: [:show, :update, :destroy]
 
     # GET /users/1
@@ -16,7 +16,7 @@ module Api::V1
       @user = Student.new(student_params)
 
       if @user.save
-        render json: @user
+        render json: @user, serializer: NewUsersSerializer
       else
         render json: @user.errors, status: :unprocessable_entity
       end

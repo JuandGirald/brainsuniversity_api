@@ -7,13 +7,10 @@ class Ability
       can :manage, :all
     elsif user.teacher?
       can :read, Teacher
-      can :update, User, id: user.id
+      can :update, Teacher, id: user.id
     elsif user.student?
       can :read, Teacher
-      can [:read, :update], User, id: user.id
-    else
-      can [:read, :create], Teacher 
-      can [:create], Student
+      can [:read, :update], Student, id: user.id
     end
     # Define abilities for the passed in user here. For example:
     #

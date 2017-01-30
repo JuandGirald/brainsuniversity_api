@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 	scope module: "api" do
 	  namespace :v1, path: "" do
 	    resources :users
-	    resources :teachers, only: [:create, :update, :show]
+	    resources :teachers, only: [:create, :update, :show, :index]
 	    resources :students, only: [:create, :update, :show]
 	    post 'session' => 'auths#authenticate'
 	    delete 'session' => 'auths#logout'
