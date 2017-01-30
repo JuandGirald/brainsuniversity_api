@@ -12,7 +12,7 @@ module Api::V1::StudentsDoc
 
   doc_for :create do
     api :POST, '/students', 'Create a Student'
-    param :user, Hash, :desc => "User info", :required => true do
+    param :student, Hash, :desc => "User info", :required => true do
       param :email, String, :required => true
       param :password, String, :required => true
     end

@@ -1,28 +1,13 @@
 module Api::V1
 	class ApiController < ApplicationController
-		before_action :authenticate!
-		
-		# Authenticate the user with token based authentication
-		def authenticate!
-			begin
-		    payload, header = TokenProvider.valid?(token)
-		    @current_user = User.find_by(id: payload['user_id'])
-			rescue
-				render_unauthorized
-			end
-		end
+		before_action :authenticate_request
+		attr_reader :current_user
 
-		def current_user
-		  @current_user ||= authenticate!
-		end
+		private
 
-		def token
-			request.headers['Authorization'].split(' ').last
-		end
-
-		def render_unauthorized(realm = "Application")
-		  self.headers["WWW-Authenticate"] = %(Token realm="#{realm.gsub(/"/, "")}")
-		  render json: 'Invalid Token Or not authorized', status: :unauthorized
-		end
+		  def authenticate_request
+		  	@current_user = AuthorizeApiRequest.call(request.headers).result
+		  	render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+		  end
 	end
 end
