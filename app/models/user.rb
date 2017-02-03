@@ -3,8 +3,11 @@ class User < ApplicationRecord
 	has_secure_password
 
 	after_create :set_auth_token 
+	before_create :create_activation_digest
 	validates :password, length: { minimum: 6 }, on: :create
  	validates :email, uniqueness: true, email_format: true
+
+ 	attr_accessor :activation_token
 
  	enum role: { admin: '1',
                teacher: '2',
@@ -26,4 +29,32 @@ class User < ApplicationRecord
 	def delete_token
 		self.update(token: nil)
 	end
+
+	def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+	# Returns the hash digest of the given string.
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+
+  # Returns a random token.
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+	def activate
+	  update_columns(activated: true, activated_at: Time.zone.now)
+	end
+
+	private
+		def create_activation_digest
+			self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+		end
 end

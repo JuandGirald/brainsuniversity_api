@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 	    resources :users
 	    resources :teachers, only: [:create, :update, :show, :index]
 	    resources :students, only: [:create, :update, :show]
+	    resources :account_activations, only: [:edit]
 	    post 'session' => 'auths#authenticate'
 	    delete 'session' => 'auths#logout'
 	  end

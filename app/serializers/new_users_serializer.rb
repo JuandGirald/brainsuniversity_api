@@ -1,3 +1,4 @@
 class NewUsersSerializer < UserSerializer
-  attributes :id, :email, :role, :created_at, :updated_at, :token
+  attributes :id, :email, :role, :token, :activated,
+  						:created_at, :updated_at
 end
