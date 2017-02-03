@@ -49,7 +49,7 @@ class User < ApplicationRecord
   end
 
 	def activate
-	  update_attribute(:activated: true, :activated_at: Time.zone.now)
+	  update_columns(activated: true, activated_at: Time.zone.now)
 	end
 
 	private

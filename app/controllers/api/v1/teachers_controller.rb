@@ -24,7 +24,7 @@ module Api::V1
 
       if @user.save
         UserMailer.account_activation(@user).deliver_now
-        render json: @user, serializer: NewUsersSerializer
+        render json: @user
       else
         render json: @user.errors, status: :unprocessable_entity
       end
