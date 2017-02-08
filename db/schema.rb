@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170131093110) do
+ActiveRecord::Schema.define(version: 20170208083923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bank_informations", force: :cascade do |t|
+    t.integer  "teacher_id"
+    t.bigint   "owner_id"
+    t.bigint   "account_number"
+    t.string   "bank_name"
+    t.string   "account_type"
+    t.string   "owner_name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["teacher_id"], name: "index_bank_informations_on_teacher_id", using: :btree
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.date     "dob"
+    t.string   "phone"
+    t.string   "address"
+    t.string   "gender"
+    t.string   "city"
+    t.string   "country"
+    t.string   "university"
+    t.string   "level"
+    t.text     "about"
+    t.integer  "rate"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "teacher_id"
+    t.integer  "student_id"
+    t.index ["student_id"], name: "index_profiles_on_student_id", using: :btree
+    t.index ["teacher_id"], name: "index_profiles_on_teacher_id", using: :btree
+    t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                       null: false
@@ -31,8 +64,12 @@ ActiveRecord::Schema.define(version: 20170131093110) do
     t.string   "activation_digest"
     t.boolean  "activated",                   default: false
     t.datetime "activated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "status"
     t.index ["activation_token"], name: "index_users_on_activation_token", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  add_foreign_key "profiles", "users"
 end

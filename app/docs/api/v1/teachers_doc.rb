@@ -19,6 +19,8 @@ module Api::V1::TeachersDoc
     param :teacher, Hash, :desc => "User info", :required => true do
       param :email, String, :required => true
       param :password, String, :required => true
+      param :first_name, String, :required => true
+      param :last_name, String, :required => true
     end
   end
 

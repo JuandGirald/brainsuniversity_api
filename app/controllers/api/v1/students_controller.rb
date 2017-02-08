@@ -40,7 +40,11 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def student_params
-        params.require(:student).permit(:password, :email)
+        params.require(:student).permit(:id, :password, :email, :first_name, :last_name,
+                                        profile_attributes: [:id, :university, :dob, :phone, 
+                                                         :address, :gender, :city, :country,
+                                                         :level, :about, :rate, :student_id, :_destroy]
+                                        )
       end
   end
 end
