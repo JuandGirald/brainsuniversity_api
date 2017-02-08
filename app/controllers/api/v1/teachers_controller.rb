@@ -8,7 +8,7 @@ module Api::V1
 
     # GET /teachers/1
     def show
-      render json: @user
+      render json: @user, serializer: UserProfileSerializer
     end
 
     # GET /teachers
@@ -47,7 +47,11 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def teacher_params
-        params.require(:teacher).permit(:password, :email)
+        params.require(:teacher).permit(:password, :email, :first_name, :last_name,
+                                        profile_attributes: [:university, :dob, :phone, 
+                                                         :address, :gender, :city, :country,
+                                                         :level, :about, :rate, :user_id]
+                                        )
       end
   end
 end
