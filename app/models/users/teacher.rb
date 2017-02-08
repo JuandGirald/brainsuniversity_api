@@ -6,8 +6,17 @@ class Teacher < User
 
 	enum status: { pending: '1', 
 								 accepted: '2',
-               	 rejected: '3'
+               	 rejected: '3',
+               	 waiting: '4'
 							 }
+
+	#							 
+	# set the user to wait for approval
+	# send email to schedule an appointment
+	def schedule_step
+		self.waiting!
+		UserMailer.schedule_step(self).deliver_now
+	end
 
 	private
 		def set_role

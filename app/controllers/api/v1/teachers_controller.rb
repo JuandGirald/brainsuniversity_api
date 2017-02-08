@@ -33,7 +33,8 @@ module Api::V1
     # PATCH/PUT /teachers/1
     def update
       if @user.update(teacher_params)
-        render json: @user
+        @user.schedule_step if @user.pending?
+        render json: @user, serializer: UserProfileSerializer
       else
         render json: @user.errors, status: :unprocessable_entity
       end
@@ -47,10 +48,10 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def teacher_params
-        params.require(:teacher).permit(:password, :email, :first_name, :last_name,
-                                        profile_attributes: [:university, :dob, :phone, 
+        params.require(:teacher).permit(:id, :password, :email, :first_name, :last_name,
+                                        profile_attributes: [:id, :university, :dob, :phone, 
                                                          :address, :gender, :city, :country,
-                                                         :level, :about, :rate, :user_id]
+                                                         :level, :about, :rate, :teacher_id, :_destroy]
                                         )
       end
   end

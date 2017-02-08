@@ -1,9 +1,11 @@
 class Profile < ApplicationRecord
-	belongs_to :teacher, inverse_of: :profile
-	belongs_to :student, inverse_of: :profile
+	belongs_to :teacher, inverse_of: :profile, dependent: :destroy
+	belongs_to :student, inverse_of: :profile, dependent: :destroy
 
 	validate :teacher_or_student
-	validates :university, presence: { message: 'University Can not be blank' }
+	validates :university, :dob, :phone, :address, 
+						:gender, :city, :country, :level, :about, 
+						:rate, presence: true, on: [:update]
 
 	private
 		def teacher_or_student
