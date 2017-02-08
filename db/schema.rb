@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208003501) do
+ActiveRecord::Schema.define(version: 20170208083923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bank_informations", force: :cascade do |t|
+    t.integer  "teacher_id"
+    t.bigint   "owner_id"
+    t.bigint   "account_number"
+    t.string   "bank_name"
+    t.string   "account_type"
+    t.string   "owner_name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["teacher_id"], name: "index_bank_informations_on_teacher_id", using: :btree
+  end
 
   create_table "profiles", force: :cascade do |t|
     t.date     "dob"

@@ -5,12 +5,20 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
+      can :assign_roles, User if user.admin?
     elsif user.teacher?
       can :read, Teacher
       can :update, Teacher, id: user.id
+      can [:read, :update], BankInformation, teacher: user
     elsif user.student?
-      can :read, Teacher
+      can :read, Teacher do |user|
+        user.status == 'complete'
+      end
       can [:read, :update], Student, id: user.id
+    else
+      can :read, Teacher do |user|
+        user.status == 'complete'
+      end
     end
     # Define abilities for the passed in user here. For example:
     #

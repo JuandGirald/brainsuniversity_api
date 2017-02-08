@@ -2,8 +2,8 @@ module Api::V1
   class TeachersController < ApiController
   	include Api::V1::TeachersDoc
 
-    load_and_authorize_resource only: [:update]
-    skip_before_action :authenticate_request, only: [:create, :index]
+    load_and_authorize_resource only: [:update, :show]
+    skip_before_action :authenticate_request, only: [:create, :index, :show]
     before_action :set_user, only: [:show, :update]
 
     # GET /teachers/1
@@ -13,7 +13,7 @@ module Api::V1
 
     # GET /teachers
     def index
-      @users = Teacher.all
+      @users = Teacher.complete
 
       render json: @users
     end
