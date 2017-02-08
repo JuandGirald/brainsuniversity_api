@@ -20,4 +20,9 @@ class UserMailer < ApplicationMailer
 
     mail to: "to@example.org"
   end
+
+  def schedule_step(user)
+    @user = user
+    mail to: user.email, subject: "Schedule an Appointment"
+  end
 end

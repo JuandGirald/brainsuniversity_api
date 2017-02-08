@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 	scope module: "api" do
 	  namespace :v1, path: "" do
 	    resources :users
-	    resources :teachers, only: [:create, :update, :show, :index]
+	    resources :teachers, only: [:create, :update, :show, :index] do
+	    	resources :bank_informations, only: [:update, :show]
+	    end
 	    resources :students, only: [:create, :update, :show]
 	    resources :account_activations, only: [:edit]
 	    post 'session' => 'auths#authenticate'

@@ -6,6 +6,7 @@ class User < ApplicationRecord
 	before_create :create_activation_digest
 	validates :password, length: { minimum: 6 }, on: :create
  	validates :email, uniqueness: true, email_format: true
+ 	validates :first_name, :last_name, presence: true
 
  	attr_accessor :activation_token
 

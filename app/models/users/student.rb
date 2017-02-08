@@ -1,7 +1,12 @@
 class Student < User
-	before_save :set_role
+	before_create :set_role
 
-	def set_role
-		self.role = 'student'
-	end
+	has_one :profile, inverse_of: :student
+	accepts_nested_attributes_for :profile
+
+	private
+
+		def set_role
+			self.role = 'student'
+		end
 end
