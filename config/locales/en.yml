@@ -25,3 +25,5 @@ en:
     manage:
       all: "Not authorized to %{action} %{subject}."
       user: "Not allowed to manage other user accounts."
+  active:
+    teacher: "You need to active your teacher account first."
