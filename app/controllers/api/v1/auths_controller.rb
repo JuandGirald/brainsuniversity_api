@@ -10,7 +10,7 @@ module Api::V1
 	    if command.success?
 	    	user = User.find_by_email(params[:username])
 
-	    	return render json: "You need to activate your user first" unless user.activated
+	    	return render json:I18n.t('active.teacher') if user.user_active? 
 	    	user.represent_user_with_token(command.result)
 	    	render json: { token: user.token, user_id: user.id }
 	    else

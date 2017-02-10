@@ -53,6 +53,11 @@ class User < ApplicationRecord
 	  update_columns(activated: true, activated_at: Time.zone.now)
 	end
 
+	# Check Unactives teachers users
+	def user_active?
+		return true if teacher? && !activated
+	end
+
 	private
 		def create_activation_digest
 			self.activation_token  = User.new_token
