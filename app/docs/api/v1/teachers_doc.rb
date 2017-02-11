@@ -25,8 +25,25 @@ module Api::V1::TeachersDoc
   end
 
   doc_for :update do
-    api :PUT, '/teachers/:id', 'Update a Student'
-    param :id, Integer, :required => true
+    api :PUT, '/teachers/:id', 'Update a Teacher'
+    param :teacher, Hash, :desc => "User info", :required => true do
+      param :id, Integer, :required => true
+      param :email, String, :required => true
+      param :password, String, :required => true
+      param :first_name, String, :required => true
+      param :last_name, String, :required => true
+      
+      param :university, String, :required => true
+      param :dob, Date, :required => true
+      param :phone, String, :required => true
+      param :address, String, :required => true
+      param :gender, String, :required => true
+      param :city, String, :required => true
+      param :country, String, :required => true
+      param :level, String, :required => true
+      param :about, String, :required => true
+      param :rate, Integer, :required => true
+    end
     auth_with :token
   end
 end
