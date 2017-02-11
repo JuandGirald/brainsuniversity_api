@@ -3,6 +3,7 @@ class Teacher < User
 	
 	has_one :profile, inverse_of: :teacher
 	has_one :bank_information
+	has_many :schedules, inverse_of: :student
 	accepts_nested_attributes_for :profile
 
 	enum status: { pending: '1', 
