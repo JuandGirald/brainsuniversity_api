@@ -1,5 +1,6 @@
 class Teacher < User
-	before_create :set_role, :set_status, :set_bank_information
+	before_create :set_role, :set_status 
+	# :set_bank_information
 	
 	has_one :profile, inverse_of: :teacher
 	has_one :bank_information
@@ -21,9 +22,9 @@ class Teacher < User
 	end
 
 	private
-		def set_bank_information
-			self.create_bank_information	
-		end
+		# def set_bank_information
+		# 	self.create_bank_information	
+		# end
 
 		def set_role
 			self.role = 'teacher'
