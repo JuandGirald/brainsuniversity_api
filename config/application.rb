@@ -27,5 +27,7 @@ module BrainsuniversityApi
     # Skip views, helpers and assets when generating a new resource.
     config.autoload_paths += %W(#{config.root}/app/models/users)
     config.api_only = true
+    config.time_zone = 'Eastern Time (US & Canada)'
+    config.active_record.default_timezone = :local # Or :utc
   end
 end

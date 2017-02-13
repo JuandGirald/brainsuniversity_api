@@ -1,5 +1,5 @@
 module Api::V1
-	class BankInformationsController < ApiController
+	class Teachers::BankInformationsController < ApiController
 		load_and_authorize_resource
 		load_and_authorize_resource :bank_information, :through => :teacher
 
@@ -21,7 +21,7 @@ module Api::V1
 
 		private
 			def set_user
-				@user = Teacher.find(params[:teacher_id])
+				@user = current_user
 			end
 
 			def bank_information_params
