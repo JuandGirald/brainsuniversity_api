@@ -2,7 +2,7 @@ module Api::V1
   class TeachersController < ApiController
   	include Api::V1::TeachersDoc
 
-    load_and_authorize_resource only: [:update, :show]
+    load_and_authorize_resource only: [:update]
     skip_before_action :authenticate_request, only: [:create, :index, :show]
     before_action :set_user, only: [:show, :update]
 
