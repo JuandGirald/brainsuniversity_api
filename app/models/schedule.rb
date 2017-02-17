@@ -4,6 +4,7 @@ class Schedule < ApplicationRecord
 
 	belongs_to :teacher, inverse_of: :schedules
 	belongs_to :student, inverse_of: :schedules
+	has_one :room, inverse_of: :schedule
 
 	validates :teacher, :student, presence: true
 	validates :start_at, :duration, presence: true

@@ -66,3 +66,6 @@ gem 'simple_command'
 
 # Serialize json response
 gem 'active_model_serializers', '~> 0.10.0'
+
+# OpenToken Video-Chat sessions
+gem "opentok", "~> 2.3"
