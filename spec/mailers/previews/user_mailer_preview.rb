@@ -13,4 +13,9 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailerMailer.password_reset
   end
 
+  def schedule_step
+    user = Teacher.last
+    UserMailer.schedule_step(user)
+  end
+
 end
