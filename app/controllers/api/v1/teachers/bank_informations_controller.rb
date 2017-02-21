@@ -3,17 +3,17 @@ module Api::V1
 		load_and_authorize_resource
 		load_and_authorize_resource :bank_information, :through => :teacher
 
-		before_action :set_user
+		before_action :set_user, :set_bank_information
 
 		def show
-			render json: @user, serializer: TeacherBankSerializer
+			render json: @bank_information, serializer: BankSerializer
 		end
 
 		def update
 			@bank_information = @user.bank_information
 			if @bank_information.update_attributes(bank_information_params)
 				@user.complete!
-	      render json: @user, serializer: TeacherBankSerializer
+	      render json: @bank_information, serializer: BankSerializer
 	    else
 	      render json: @user.errors, status: :unprocessable_entity
 	    end
@@ -22,6 +22,10 @@ module Api::V1
 		private
 			def set_user
 				@user = current_user
+			end
+
+			def set_bank_information
+				@bank_information = BankInformation.find(params[:id])
 			end
 
 			def bank_information_params
