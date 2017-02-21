@@ -3,4 +3,5 @@ class UserProfileSerializer < UserSerializer
   						:activated, :status
 
   has_one :profile
+  has_one :bank_information
 end
