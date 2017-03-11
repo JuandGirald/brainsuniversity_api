@@ -10,7 +10,9 @@ module Api::V1
 	    if command.success?
 	    	user = User.find_by_email(params[:username])
 
+	    	return render json: "You have to create a #{params[:role]} account in order to login" if user.role != params[:role]
 	    	return render json:I18n.t('active.teacher') if user.user_active? 
+	    	
 	    	user.represent_user_with_token(command.result)
 	    	render json: { token: user.token, user_id: user.id }
 	    else
