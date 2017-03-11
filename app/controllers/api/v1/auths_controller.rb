@@ -5,12 +5,11 @@ module Api::V1
 		skip_before_action :authenticate_request, only: [:authenticate]
 
 	  def authenticate
-	    command = AuthenticateUser.call(params[:username], params[:password])
+	    command = AuthenticateUser.call(params[:username], params[:password], params[:role])
 
 	    if command.success?
 	    	user = User.find_by_email(params[:username])
 
-	    	return render json: "You have to create a #{params[:role]} account in order to login" if user.role != params[:role]
 	    	return render json:I18n.t('active.teacher') if user.user_active? 
 	    	
 	    	user.represent_user_with_token(command.result)
