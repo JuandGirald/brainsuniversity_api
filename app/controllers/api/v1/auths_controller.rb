@@ -13,7 +13,7 @@ module Api::V1
 	    	return render json:I18n.t('active.teacher') if user.user_active? 
 	    	
 	    	user.represent_user_with_token(command.result)
-	    	render json: { token: user.token, user_id: user.id }
+	    	render json: { token: user.token, user_id: user.id, status: user.status }
 	    else
 	      render json: { error: command.errors }, status: :unauthorized
 	    end
