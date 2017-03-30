@@ -7,6 +7,9 @@ class Teacher < User
 	has_many :schedules, inverse_of: :teacher
 	accepts_nested_attributes_for :profile
 
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
 	enum status: { pending: '1', 
 								 accepted: '2',
                	 rejected: '3',

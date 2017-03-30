@@ -13,7 +13,11 @@ module Api::V1
 
     # GET /teachers
     def index
-      @users = Teacher.complete
+      if params[:subject].present?
+        @users = Teacher.search(:subject).paginate(:per_page => 10).records
+      else
+        @users = Teacher.complete
+      end
 
       render json: @users
     end
