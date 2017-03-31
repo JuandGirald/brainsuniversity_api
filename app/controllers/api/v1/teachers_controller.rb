@@ -13,13 +13,14 @@ module Api::V1
 
     # GET /teachers
     def index
+      page = params[:page].present? ? params[:page] : 1 
+      @users = Teacher.complete
+
       if params[:subject].present?
-        @users = Teacher.search(:subject).paginate(:per_page => 10).records
-      else
-        @users = Teacher.complete
+        @users = @users.where('subjects && ARRAY[?]::varchar[]', params[:subject])
       end
 
-      render json: @users
+      render json: @users.paginate(page: page, :per_page => 10)
     end
 
     # POST /teachers

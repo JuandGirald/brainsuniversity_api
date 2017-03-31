@@ -26,10 +26,6 @@ gem 'will_paginate', '~> 3.1.0'
 # Rails 4 does not render static assets on heroku by default
 gem 'rails_12factor', group: :production
 
-#Elastic-search model for advance queries searchs.
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
