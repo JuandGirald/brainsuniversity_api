@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 	include TokenProvider
 	has_secure_password
 
