@@ -20,6 +20,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+#Paginate Gem
+gem 'will_paginate', '~> 3.1.0'
+
 # Rails 4 does not render static assets on heroku by default
 gem 'rails_12factor', group: :production
 
