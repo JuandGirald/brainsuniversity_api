@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 	  	end
 	    resources :users
 	    resources :teachers, only: [:create, :update, :show, :index]
-	    resources :students, only: [:create, :update, :show]
+	    resources :students, only: [:create, :update, :show, :index]
 	  	resources :account_activations, only: [:edit]
 	    post 'session' => 'auths#authenticate'
 	    delete 'session' => 'auths#logout'

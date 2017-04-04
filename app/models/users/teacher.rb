@@ -21,7 +21,7 @@ class Teacher < User
 		self.waiting!
 		UserMailer.schedule_step(self).deliver_now
 	end
-
+	
 	private
 		def set_bank_information
 			create_bank_information	

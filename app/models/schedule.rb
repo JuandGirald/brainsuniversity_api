@@ -3,8 +3,11 @@ class Schedule < ApplicationRecord
 	before_validation :set_free_duration
 
 	belongs_to :teacher, inverse_of: :schedules
+	delegate :email, to: :teacher, prefix: true
+
 	belongs_to :student, inverse_of: :schedules
 	has_one :room, inverse_of: :schedule
+	delegate :email, to: :student, prefix: true
 
 	validates :teacher, :student, presence: true
 	validates :start_at, :duration, presence: true
@@ -17,8 +20,9 @@ class Schedule < ApplicationRecord
                	 canceled: '6',
                	 completed: '7'
 							 }
-
+							 
 	private
+
 		def set_default_status
 			self.status = 'awaiting_tutor'
 		end

@@ -11,6 +11,12 @@ module Api::V1
       render json: @user
     end
 
+    #GET /Users
+    def index
+      @user = current_user
+      render json: @user, serializer: IndexStudentSerializer
+    end
+
     # POST /users
     def create
       @user = Student.new(student_params)
