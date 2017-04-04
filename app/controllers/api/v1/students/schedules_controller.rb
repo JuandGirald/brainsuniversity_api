@@ -6,7 +6,7 @@ module Api::V1
 
 		def index
 			@shedules = current_user.schedules	
-			render json: @schedules, each_serializer: ListStudentSchedulesSerializer
+			render json: @schedules, each_serializer: ListSchedulesSerializer
 		end
 
 		def show

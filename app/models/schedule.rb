@@ -20,17 +20,7 @@ class Schedule < ApplicationRecord
                	 canceled: '6',
                	 completed: '7'
 							 }
-
-	#returns teacher's name and Email
-	def teacher_name
-    teacher.first_name + " " + teacher.last_name
-  end
-
-  #returns student's name and Email
-	def student_name
-    student.first_name + " " + student.last_name
-  end
-
+							 
 	private
 
 		def set_default_status

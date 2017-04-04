@@ -9,15 +9,4 @@ class Student < User
 		def set_role
 			self.role = 'student'
 		end
-
-		# Displays full student's full name.
-		def name
-			first_name + " " + last_name 
-		end
-
-		# Shows last student's schedule
-	  def student_last_schedule
-	  	schedules.last.start_at
-	  end
-
 end
