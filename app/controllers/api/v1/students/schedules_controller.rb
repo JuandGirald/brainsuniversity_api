@@ -7,7 +7,7 @@ module Api::V1
     def index
       page = params[:page].present? ? params[:page] : 1 
       if params[:status].present?
-        @schedules = current_user.schedules.unscoped.send(params[:status])
+        @schedules = current_user.schedules.send(params[:status])
       else
         @schedules = current_user.schedules
       end

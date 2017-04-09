@@ -21,8 +21,6 @@ class Schedule < ApplicationRecord
                  completed: '7'
                }
   
-  default_scope { where status: 'awaiting_tutor' }
-  
   private
 
     def set_default_status
