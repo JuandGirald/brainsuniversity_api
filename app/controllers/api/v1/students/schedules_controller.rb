@@ -5,8 +5,13 @@ module Api::V1
 		before_action :set_schedule, only: [:update, :show]
 
 		def index
-			@shedules = current_user.schedules	
-			render json: @schedules, each_serializer: ListSchedulesSerializer
+			page = params[:page].present? ? params[:page] : 1 
+			if params[:status].present?
+				@schedules = current_user.schedules.unscoped.send(params[:status])
+			else
+				@schedules = current_user.schedules
+			end
+			render json: @schedules.paginate(page: page, :per_page => 10), each_serializer: ListSchedulesSerializer
 		end
 
 		def show
