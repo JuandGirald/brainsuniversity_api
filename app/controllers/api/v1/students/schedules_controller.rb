@@ -11,7 +11,9 @@ module Api::V1
       else
         @schedules = current_user.schedules
       end
-      render json: @schedules.paginate(page: page, :per_page => 10), each_serializer: ListSchedulesSerializer
+      @schedules = @schedules.paginate(page: page, :per_page => 10)
+      render json: @schedules, each_serializer: ListSchedulesSerializer,
+                               meta: pagination(@schedules, 10)
     end
 
     def show

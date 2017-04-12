@@ -20,7 +20,8 @@ module Api::V1
         @users = @users.where('subjects && ARRAY[?]::varchar[]', params[:subject])
       end
 
-      render json: @users.paginate(page: page, :per_page => 10)
+      @users = @users.paginate(page: page, :per_page => 10)
+      render json: @users, meta: pagination(@users, 10)
     end
 
     # POST /teachers
