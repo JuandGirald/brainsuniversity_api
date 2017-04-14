@@ -1,6 +1,6 @@
 module Api::V1
   class TeachersController < ApiController
-  	include Api::V1::TeachersDoc
+    include Api::V1::TeachersDoc
 
     load_and_authorize_resource only: [:update]
     skip_before_action :authenticate_request, only: [:create, :index, :show]
@@ -39,7 +39,7 @@ module Api::V1
     # PATCH/PUT /teachers/1
     def update
       if @user.update(teacher_params)
-        @user.schedule_step if @user.pending?
+        @user.schedule_step unless @user.complete?
         render json: @user, serializer: UserProfileSerializer
       else
         render json: @user.errors, status: :unprocessable_entity
@@ -54,10 +54,12 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def teacher_params
-        params.require(:teacher).permit(:id, :password, :email, :first_name, :last_name,
+        params.require(:teacher).permit(:id, :password, :email, :first_name, :last_name, :subjects,
                                         profile_attributes: [:id, :university, :dob, :phone, 
                                                          :address, :gender, :city, :country,
-                                                         :level, :about, :rate, :teacher_id, :_destroy]
+                                                         :level, :about, :rate, :teacher_id, :_destroy],
+                                        availability_attributes: [:id, :teacher_id, :morning, :evening,
+                                                                  :afternoon, :night]
                                         )
       end
   end
