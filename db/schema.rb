@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326234114) do
+ActiveRecord::Schema.define(version: 20170414050633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "availabilities", force: :cascade do |t|
+    t.integer  "teacher_id"
+    t.string   "morning",    default: [],              array: true
+    t.string   "afternoon",  default: [],              array: true
+    t.string   "evening",    default: [],              array: true
+    t.string   "night",      default: [],              array: true
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "bank_informations", force: :cascade do |t|
     t.integer  "teacher_id"
@@ -72,22 +82,26 @@ ActiveRecord::Schema.define(version: 20170326234114) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                             null: false
+    t.string   "email",                                       null: false
     t.string   "crypted_password"
     t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
-    t.string   "role",              default: "3",   null: false
+    t.string   "role",                        default: "3",   null: false
     t.string   "type"
     t.string   "password_digest"
+    t.string   "activation_state"
+    t.string   "activation_token"
+    t.datetime "activation_token_expires_at"
     t.string   "activation_digest"
-    t.boolean  "activated",         default: false
+    t.boolean  "activated",                   default: false
     t.datetime "activated_at"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "status"
-    t.string   "subjects",          default: [],                 array: true
+    t.string   "subjects",                    default: [],                 array: true
+    t.index ["activation_token"], name: "index_users_on_activation_token", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
