@@ -39,7 +39,7 @@ module Api::V1
     # PATCH/PUT /teachers/1
     def update
       if @user.update(teacher_params)
-        @user.schedule_step unless @user.complete?
+        @user.schedule_step if @user.pending?
         render json: @user, serializer: UserProfileSerializer
       else
         render json: @user.errors, status: :unprocessable_entity
