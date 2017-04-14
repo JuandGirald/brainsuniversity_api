@@ -1,5 +1,4 @@
-class StaticPagesController < ApplicationController
+class StaticPagesController < ActionController::Base
   def home
-    render 'home'
   end
 end
