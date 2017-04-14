@@ -33,7 +33,7 @@ module BrainsuniversityApi
     
     config.autoload_paths += %W(#{config.root}/app/models/users)
     config.api_only = true
-    config.time_zone = 'Eastern Time (US & Canada)'
+    config.time_zone = 'Bogota'
     config.active_record.default_timezone = :local # Or :utc
   end
 end

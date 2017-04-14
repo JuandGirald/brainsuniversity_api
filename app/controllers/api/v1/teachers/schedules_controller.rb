@@ -12,7 +12,7 @@ module Api::V1
         @schedules = current_user.schedules
       end
 
-      @schedules = @schedules.paginate(page: page, :per_page => 10)
+      @schedules = @schedules.paginate(page: page, :per_page => 10).order('start_at ASC')
       render json: @schedules, each_serializer: ListSchedulesSerializer,
                                meta: pagination(@schedules, 10)
     end
