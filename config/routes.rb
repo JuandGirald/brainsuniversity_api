@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   apipie
+
+  get '/', to: 'static_pages#home'
+  root to: 'static_pages#home'
 	scope module: "api" do
 	  namespace :v1, path: "" do
 	  	namespace :teachers do
