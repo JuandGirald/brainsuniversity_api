@@ -20,6 +20,22 @@ class Schedule < ApplicationRecord
                  canceled: '6',
                  completed: '7'
                }
+
+  # Create a room for the current schedule with
+  # OpenTok credentials
+  #
+  def generate_room
+    opentok = OpentokApi.new
+    session = opentok.create_session
+
+    teacher_token = opentok.get_user_token(self.teacher, self, session.session_id)
+    student_token = opentok.get_user_token(self.student, self, session.session_id)
+
+    create_room(teacher_token: teacher_token, 
+                student_token: student_token,
+                session_id: session.session_id
+               )
+  end
   
   private
 
