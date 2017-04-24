@@ -11,7 +11,7 @@ task create_room: :environment do
 
 
     if !(regex =~ t).nil?  && t.to_i <= 10
-      if s.room.present?
+      unless s.room.present?
         s.generate_room
       end
     end
