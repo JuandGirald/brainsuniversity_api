@@ -2,7 +2,7 @@ module Api::V1
   class Teachers::SchedulesController < ApiController
     load_and_authorize_resource
 
-    before_action :set_schedule, only: [:update, :show]
+    before_action :set_schedule, only: [:update, :show, :session]
 
     def index
       page = params[:page].present? ? params[:page] : 1 
@@ -15,6 +15,17 @@ module Api::V1
       @schedules = @schedules.paginate(page: page, :per_page => 10).order('start_at ASC')
       render json: @schedules, each_serializer: ListSchedulesSerializer,
                                meta: pagination(@schedules, 10)
+    end
+
+    def session
+      if @schedule.room.present?
+        render json: { apikey: ENV['OPENTOK_API_KEY'],
+                       sessionId: @schedule.room.session_id,
+                       token: @schedule.room.teacher_token
+                     }
+      else
+        render json: { error: "Tu tutoria no estará disponible hasta el: #{@schedule.start_at}" }
+      end
     end
 
     def show

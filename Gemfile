@@ -72,3 +72,6 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 # OpenToken Video-Chat sessions
 gem "opentok", "~> 2.3"
+
+# Background Jobs
+gem 'delayed_job_active_record'

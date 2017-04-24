@@ -6,11 +6,15 @@ Rails.application.routes.draw do
 	scope module: "api" do
 	  namespace :v1, path: "" do
 	  	namespace :teachers do
-	  		resources :schedules, only: [:update, :show, :index]
+	  		resources :schedules, only: [:update, :show, :index] do
+	  			get 'session', on: :member
+	  		end
 	  		resources :bank_informations, only: [:update, :show]
 	  	end
 	  	namespace :students do
-	  		resources :schedules, only: [:create, :update, :show, :index]
+	  		resources :schedules, only: [:create, :update, :show, :index] do
+	  			get 'session', on: :member
+	  		end
 	  	end
 	    resources :users
 	    resources :teachers, only: [:create, :update, :show, :index]

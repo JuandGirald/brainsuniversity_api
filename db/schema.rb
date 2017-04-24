@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414050633) do
+ActiveRecord::Schema.define(version: 20170424023932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,21 @@ ActiveRecord::Schema.define(version: 20170414050633) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["teacher_id"], name: "index_bank_informations_on_teacher_id", using: :btree
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -62,8 +77,10 @@ ActiveRecord::Schema.define(version: 20170414050633) do
     t.string   "name"
     t.integer  "schedule_id"
     t.string   "session_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "student_token", limit: 10000
+    t.string   "teacher_token", limit: 10000
     t.index ["schedule_id"], name: "index_rooms_on_schedule_id", using: :btree
   end
 

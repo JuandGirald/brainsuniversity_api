@@ -11,8 +11,10 @@ class Ability
       can :update, Teacher, id: user.id
       can [:update, :read], Schedule, teacher: user
       can [:read, :update], BankInformation, teacher: user
+      can :session, Schedule
     elsif user.student?
       can :create, Schedule
+      can :session, Schedule
       can [:update, :read], Schedule, student: user
       can :read, Teacher do |user|
         user.status == 'complete'
