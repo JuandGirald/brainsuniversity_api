@@ -31,7 +31,9 @@ class Schedule < ApplicationRecord
     teacher_token = opentok.get_user_token(self.teacher, self, session.session_id)
     student_token = opentok.get_user_token(self.student, self, session.session_id)
 
-    create_room(teacher_token: teacher_token, 
+    create_room(
+                name: teacher.first_name,
+                teacher_token: teacher_token, 
                 student_token: student_token,
                 session_id: session.session_id
                )
