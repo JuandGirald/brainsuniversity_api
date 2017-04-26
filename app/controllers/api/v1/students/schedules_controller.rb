@@ -36,6 +36,20 @@ module Api::V1
       @user = current_user.schedules.create(schedule_params)
       if @user.save
         render json: @user, serializer: ScheduleSerializer
+
+        if Chat.between(current_user,params[:recipient_id]).present?
+          @chat = Chat.between(params[:sender_id],params[:recipient_id]).first
+        else
+          @chat = Chat.create!(chat_params)
+        end
+        redirect_to chat_messages_path(@chat)
+
+         @message = @conversation.messages.new(message_params)
+        if @message.save
+          redirect_to conversation_messages_path(@conversation)
+        end
+
+        params[:message]
       else
         render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
       end

@@ -2,6 +2,8 @@ class User < ApplicationRecord
 	include TokenProvider
 	has_secure_password
 
+	has_many :chats, foreign_key: :sender_id
+
 	after_create :set_auth_token 
 	before_create :create_activation_digest
 	validates :password, length: { minimum: 6 }, on: :create
