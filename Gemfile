@@ -26,6 +26,10 @@ gem 'will_paginate', '~> 3.1.0'
 # Rails 4 does not render static assets on heroku by default
 gem 'rails_12factor', group: :production
 
+#Preview email in the default browser instead of sending it.
+gem "letter_opener", :group => :development
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

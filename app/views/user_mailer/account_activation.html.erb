@@ -1,10 +1,6 @@
-<h1>Sample App</h1>
 
-<p>Hi <%= @user.email %>,</p>
+<h1>Hola <%= @user.email %>,</p>
 
-<p>
-	Welcome to the Sample App! Click on the link below to activate your account:
-</p>
+<p>Bienvenido a Brains-tutors! Presiona click para activar tu cuenta:</p>
 
-<%= link_to "Activate", edit_v1_account_activation_url(@user.activation_token,
-                                                    email: @user.email) %>
+<%= link_to "Activar Cuenta", ("http://brains-tutors.surge.sh/account_activations/#{@user.activation_token}/email=#{@user.email}") %>
