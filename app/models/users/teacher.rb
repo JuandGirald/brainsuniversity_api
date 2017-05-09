@@ -1,6 +1,4 @@
 class Teacher < User
-  attr_accessor :subjects
-
   before_create :set_role, :set_status
   after_create  :set_bank_information_availability
   
@@ -28,8 +26,8 @@ class Teacher < User
   # fix ActiveRecord + problem withe arrays
   # when udate data
   # 
-  def update_subjects
-    self.subjects = subjects.split(',')
+  def update_subjects(array)
+    self.subjects = array.split(',')
     subjects_will_change!
     self.save!
   end
