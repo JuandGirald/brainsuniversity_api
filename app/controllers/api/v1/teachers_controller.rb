@@ -17,7 +17,7 @@ module Api::V1
       @users = Teacher.complete
 
       if params[:subject].present?
-        @users = @users.where('subjects && ARRAY[?]::varchar[]', params[:subject])
+        @users = @users.where('subjects && ARRAY[?]', params[:subject])
       end
 
       @users = @users.paginate(page: page, :per_page => 10)
@@ -39,6 +39,7 @@ module Api::V1
     # PATCH/PUT /teachers/1
     def update
       if @user.update(teacher_params)
+        @user.update_subjects if params["teacher"]["subjects"].present?
         @user.schedule_step if @user.pending?
         render json: @user, serializer: UserProfileSerializer
       else
@@ -59,7 +60,7 @@ module Api::V1
                                                          :address, :gender, :city, :country,
                                                          :level, :about, :rate, :teacher_id, :_destroy],
                                         availability_attributes: [:id, :teacher_id, :morning, :evening,
-                                                                  :afternoon, :night]
+                                                                  :afternoon, :night, :_destroy]
                                         )
       end
   end
