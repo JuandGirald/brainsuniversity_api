@@ -1,4 +1,6 @@
 class Teacher < User
+  attr_accessor :subjects
+
   before_create :set_role, :set_status
   after_create  :set_bank_information_availability
   
@@ -15,12 +17,21 @@ class Teacher < User
                  complete: '5'
                }
 
-  #              
   # set the user to wait for approval
   # send email to schedule an appointment
+  #
   def schedule_step
     self.waiting!
     UserMailer.schedule_step(self).deliver_now
+  end
+
+  # fix ActiveRecord + problem withe arrays
+  # when udate data
+  # 
+  def update_subjects
+    self.subjects = subjects.split(',')
+    subjects_will_change!
+    self.save!
   end
   
   private
