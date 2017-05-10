@@ -31,6 +31,19 @@ class Teacher < User
     subjects_will_change!
     self.save!
   end
+
+  # Parse availability array params 
+  #
+  def parse_availability_params(params)
+    params.each do |param|
+      unless param == 'id'
+        parsed = JSON.parse params[param] 
+        param = param + "="
+        self.availability.send(param, parsed) 
+      end
+    end
+    self.save!
+  end
   
   private
     def set_bank_information_availability
