@@ -6,4 +6,4 @@
 	Welcome to the Sample App! Click on the link below to activate your account:
 </p>
 
-<%= link_to "Activar Cuenta", ("http://brains-tutors.surge.sh/account-activations?email=#{@user.activation_token}&email=#{@user.email}") %>
+<a href="<%=ENV['CLIENT_URL']%>/account-activations?email=<%= @user.activation_token %>&email=<%= @user.email %>">Activa Cuenta</a>
