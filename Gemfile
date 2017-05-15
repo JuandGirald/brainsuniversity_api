@@ -75,3 +75,7 @@ gem "opentok", "~> 2.3"
 
 # Background Jobs
 gem 'delayed_job_active_record'
+
+# SendGrid Integration
+gem 'sendgrid-ruby'
+

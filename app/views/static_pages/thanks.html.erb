@@ -1,0 +1,10 @@
+<div style="background: url('https://s3-sa-east-1.amazonaws.com/brainstutor-assets/bg-images/hero_universities+2.png') no-repeat top center; background width: 100%;
+  height: 100%;
+  background-size: cover;
+  text-align: center;
+  padding: 5em;
+  color: white;">
+  <h1>Tu cuenta ha sido exitosamente activada</h1>
+  <p>Felicidades <%= @user.first_name %>, tu cuenta ha sido activadda, ahora puedes inisiar sesión con tu usuario y contraseña.</p>
+  <%= link_to 'Iniciar Sesión', ENV['CLIENT_URL'] + "/ingresar" %>
+</div>
