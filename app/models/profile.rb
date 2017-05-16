@@ -3,7 +3,7 @@ class Profile < ApplicationRecord
 	belongs_to :student, inverse_of: :profile, dependent: :destroy
 
 	validate :teacher_or_student
-	validates :university, :dob, :phone, :address, 
+	validates :university, :dob, :phone, 
 						:gender, :city, :country, :level, :about, 
 						:rate, presence: true, on: [:update]
 
