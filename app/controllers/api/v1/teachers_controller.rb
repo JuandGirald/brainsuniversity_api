@@ -1,6 +1,7 @@
 module Api::V1
   class TeachersController < ApiController
     include Api::V1::TeachersDoc
+    include ErrorSerializer
 
     load_and_authorize_resource only: [:update]
     skip_before_action :authenticate_request, only: [:create, :index, :show]
@@ -32,7 +33,7 @@ module Api::V1
         UserMailer.account_activation(@user).deliver_now
         render json: @user
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
       end
     end
 
@@ -44,7 +45,7 @@ module Api::V1
         @user.schedule_step if @user.pending?
         render json: @user, serializer: UserProfileSerializer
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
       end
     end
 

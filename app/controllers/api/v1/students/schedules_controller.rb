@@ -1,5 +1,6 @@
 module Api::V1
   class Students::SchedulesController < ApiController
+    include ErrorSerializer
     load_and_authorize_resource
 
     before_action :set_schedule, only: [:update, :show, :session]
@@ -36,7 +37,7 @@ module Api::V1
       if @user.save
         render json: @user, serializer: ScheduleSerializer
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
       end
     end
 
@@ -44,7 +45,7 @@ module Api::V1
       if @schedule.update_attributes(schedule_params)
         render json: @schedule, serializer: ScheduleSerializer
       else
-        render json: @schedule.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity
       end
     end
 
