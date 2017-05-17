@@ -1,5 +1,6 @@
 module Api::V1
 	class Teachers::BankInformationsController < ApiController
+		include ErrorSerializer
 		load_and_authorize_resource
 		load_and_authorize_resource :bank_information, :through => :teacher
 
@@ -15,7 +16,7 @@ module Api::V1
 				@user.complete!
 	      render json: @bank_information, serializer: BankSerializer
 	    else
-	      render json: @user.errors, status: :unprocessable_entity
+	      render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
 	    end
 		end
 
