@@ -1,6 +1,7 @@
 class Teacher < User
   before_create :set_role, :set_status
   after_create  :set_bank_information_availability
+  after_update  :accepted_tutor
   
   has_one :profile, inverse_of: :teacher
   has_one :bank_information
@@ -21,6 +22,15 @@ class Teacher < User
   def schedule_step
     self.waiting!
     UserMailer.schedule_step(self).deliver_now
+  end
+
+  # send email when a tutor is accepted
+  # 
+  def accepted_tutor
+    if waiting?
+      UserMailer.accepted_tutor(self).deliver_now if waiting?
+      self.accepted!
+    end
   end
 
   # fix ActiveRecord + problem withe arrays

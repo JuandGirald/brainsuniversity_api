@@ -40,7 +40,7 @@ module Api::V1
     # PATCH/PUT /teachers/1
     def update
       if @user.update(teacher_params)
-        @user.parse_availability_params(params["teacher"]["availability_attributes"])
+        @user.parse_availability_params(params["teacher"]["availability_attributes"]) if params["teacher"]["availability_attributes"].present?
         @user.update_subjects(params["teacher"]["subjects"]) if params["teacher"]["subjects"].present?
         @user.schedule_step if @user.pending?
         render json: @user, serializer: UserProfileSerializer
