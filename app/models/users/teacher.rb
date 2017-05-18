@@ -1,7 +1,7 @@
 class Teacher < User
   before_create :set_role, :set_status
   after_create  :set_bank_information_availability
-  after_update  :accepted_tutor
+  # after_update  :accepted_tutor
   
   has_one :profile, inverse_of: :teacher
   has_one :bank_information
