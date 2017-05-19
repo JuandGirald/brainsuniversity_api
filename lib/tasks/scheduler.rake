@@ -17,3 +17,14 @@ task create_room: :environment do
     end
   end
 end
+
+desc 'check expired schedules'
+task expired_schedules: :environment do
+  schedules = Schedule.where(status: [:awaiting_tutor, :accepted_awaiting_payment])
+
+  schedules.each do |s|
+    if Time.now > s.start_at
+      s.expired!
+    end
+  end
+end
