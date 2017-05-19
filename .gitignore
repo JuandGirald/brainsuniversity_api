@@ -18,7 +18,7 @@
 /config/local_env.yml
 
 # Ignore .DS_Store  files
-.DS_Store 
+*.DS_Store
 
 # Ignore all logfiles and tempfiles.
 /log/*

@@ -20,13 +20,13 @@ class AuthenticateUser
 
     if user 
       if user.role != role
-        errors.add :user_authentication, "You need to login with a #{role} account"
+        errors.add :user_authentication, "Necesitas loggearte con una cuenta de #{role}"
       else
         return user if user.authenticate(password)
-        errors.add :user_authentication, 'invalid credentials'
+        errors.add :user_authentication, 'Credenciales invalidas'
       end
     else
-      errors.add :user_authentication, 'invalid credentials'
+      errors.add :user_authentication, 'Credenciales Invalidas'
     end
 
     nil
