@@ -39,6 +39,21 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def fill_your_profile(user)
+    personalization = Personalization.new
+    personalization.to = Email.new(email: user.email )
+    personalization.substitutions = Substitution.new(key: '-name-', value: user.first_name)
+    personalization.substitutions = Substitution.new(key: '-email-', value: user.email)
+    
+    mail = setup_mail('Completa tu Perfil', '1fd9413d-764e-4fae-b4c0-79030ecc38f9', personalization)
+    sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+    begin
+      response = sg.client.mail._("send").post(request_body: mail.to_json)
+    rescue Exception => e
+      puts e.message
+    end
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
