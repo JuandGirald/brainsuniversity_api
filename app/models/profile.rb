@@ -5,7 +5,7 @@ class Profile < ApplicationRecord
 	validate :teacher_or_student
 	validates :university, :dob, :phone, 
 						:gender, :city, :country, :level, :about, 
-						:rate, presence: true, on: [:update]
+						:rate, presence: true, on: [:update], if: :teacher
 
 	private
 		def teacher_or_student
