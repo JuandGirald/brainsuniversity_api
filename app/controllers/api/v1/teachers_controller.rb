@@ -22,7 +22,7 @@ module Api::V1
       end
 
       @users = @users.paginate(page: page, :per_page => 10)
-      render json: @users, meta: pagination(@users, 10)
+      render json: @users, serializer: TeacherSerializer, meta: pagination(@users, 10)
     end
 
     # POST /teachers
