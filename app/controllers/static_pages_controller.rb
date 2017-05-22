@@ -6,6 +6,10 @@ class StaticPagesController < ActionController::Base
     @user = User.find(params[:id])
   end
 
+  def check_status
+    render json: true
+  end
+
   def invalid_activation_token
   end
 
