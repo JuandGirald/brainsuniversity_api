@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby RUBY_VERSION > "2.3.1" ? RUBY_VERSION : "2.3.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -50,7 +51,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Magic authentication
-gem 'sorcery' 
+gem 'sorcery'
 
 #Roles!
 gem 'cancancan'
@@ -59,7 +60,7 @@ gem 'cancancan'
 gem 'validates_email_format_of'
 
 # JWT (short for JSON Web Token)
-gem 'jwt'  
+gem 'jwt'
 
 # API documentation
 gem 'apipie-rails'
