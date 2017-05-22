@@ -79,3 +79,7 @@ gem 'delayed_job_active_record'
 # SendGrid Integration
 gem 'sendgrid-ruby'
 
+# Scheduler 
+gem 'whenever', :require => false
+
+
