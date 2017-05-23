@@ -2,7 +2,8 @@ class User < ApplicationRecord
 	include TokenProvider
 	has_secure_password
 
-	has_many :chats, foreign_key: :sender_id
+	has_many :chats, foreign_key: :sender_id, class_name: 'Chat'
+	has_many :chats_recipients, foreign_key: :recipient_id, class_name: 'Chat'
 
 	after_create :set_auth_token 
 	before_create :create_activation_digest
@@ -53,6 +54,10 @@ class User < ApplicationRecord
 
 	def activate
 	  update_columns(activated: true, activated_at: Time.zone.now)
+	end
+
+	def current_chats
+		self.chats.empty? ? self.chats_recipients : self.chats
 	end
 
 	# Check Unactives teachers users

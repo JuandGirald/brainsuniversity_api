@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20170519023643) do
     t.index ["teacher_id"], name: "index_bank_informations_on_teacher_id", using: :btree
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["recipient_id"], name: "index_chats_on_recipient_id", using: :btree
+    t.index ["sender_id"], name: "index_chats_on_sender_id", using: :btree
+  end
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -50,15 +59,6 @@ ActiveRecord::Schema.define(version: 20170519023643) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-  end
-  
-  create_table "chats", force: :cascade do |t|
-    t.integer  "sender_id"
-    t.integer  "recipient_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["recipient_id"], name: "index_chats_on_recipient_id", using: :btree
-    t.index ["sender_id"], name: "index_chats_on_sender_id", using: :btree
   end
 
   create_table "messages", force: :cascade do |t|
@@ -133,9 +133,7 @@ ActiveRecord::Schema.define(version: 20170519023643) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "status"
-    t.text     "subjects",                    default: [],                 array: true
-    t.index ["activation_token"], name: "index_users_on_activation_token", using: :btree
-    t.string   "subjects",          default: [],                 array: true
+    t.text     "subjects",          default: [],                 array: true
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
