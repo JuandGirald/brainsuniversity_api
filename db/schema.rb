@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20170519023643) do
     t.index ["teacher_id"], name: "index_bank_informations_on_teacher_id", using: :btree
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["recipient_id"], name: "index_chats_on_recipient_id", using: :btree
+    t.index ["sender_id"], name: "index_chats_on_sender_id", using: :btree
+  end
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -50,6 +59,16 @@ ActiveRecord::Schema.define(version: 20170519023643) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "body"
+    t.integer  "chat_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -99,28 +118,26 @@ ActiveRecord::Schema.define(version: 20170519023643) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                                       null: false
+    t.string   "email",                             null: false
     t.string   "crypted_password"
     t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
-    t.string   "role",                        default: "3",   null: false
+    t.string   "role",              default: "3",   null: false
     t.string   "type"
     t.string   "password_digest"
-    t.string   "activation_state"
-    t.string   "activation_token"
-    t.datetime "activation_token_expires_at"
     t.string   "activation_digest"
-    t.boolean  "activated",                   default: false
+    t.boolean  "activated",         default: false
     t.datetime "activated_at"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "status"
-    t.text     "subjects",                    default: [],                 array: true
-    t.index ["activation_token"], name: "index_users_on_activation_token", using: :btree
+    t.text     "subjects",          default: [],                 array: true
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "users"
   add_foreign_key "profiles", "users"
 end
