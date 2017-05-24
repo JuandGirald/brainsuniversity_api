@@ -2,7 +2,8 @@ module Api::V1
   class MessagesController < ApiController
     
     def index
-      @messages = @chat.messages
+      @chat = Chat.find(params[:chat_id])
+      render json: @chat.messages
     end
 
     def create
