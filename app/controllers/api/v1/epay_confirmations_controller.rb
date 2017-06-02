@@ -3,7 +3,15 @@ module Api::V1
     skip_before_action :authenticate_request, only: [:create]
     
     def create
-      puts params[:x_response]
+      epay = EpayIntegration.new(params)
+      if epay.validate_signature
+        # process epay transaction information by order
+        # epay.process_epay_transaction
+        render json: { status: 'Thanks' }
+      else
+        render json: { error: 'Firma invalida' }, status: 401
+      end
     end
+
   end
 end
