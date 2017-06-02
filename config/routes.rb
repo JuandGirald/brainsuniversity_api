@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
 
   get '/check-status', to: 'static_pages#check_status'
+  get '/respuesta', to: 'static_pages#respuesta'
   get '/cuenta-activada/:id', to: 'static_pages#thanks', as: 'activation_success'
   get '/token-invalido', to: 'static_pages#invalid_activation_token'
   match "/ingresar" => redirect("#{ENV['CLIENT_URL']}/ingresar"), :as => :ingresar, via: :get
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
 	  	resources	:messages, only: [:index, :create]
 	    post 'session' => 'auths#authenticate'
 	    delete 'session' => 'auths#logout'
+      resources :epay_confirmations, only: [:create]
 	  end
 	end
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

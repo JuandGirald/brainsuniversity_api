@@ -1,2 +1,16 @@
-<div id="otEmbedContainer" style="width:800px; height:640px"></div>
-<script src="https://tokbox.com/embed/embed/ot-embed.js?embedId=d74e4fcc-e5bd-4427-ac0c-d3eaaf198391"></script>
+<form>
+  <script 
+    src="https://s3-us-west-2.amazonaws.com/epayco/v1.0/checkoutEpayco.js" 
+    class="epayco-button" 
+    data-epayco-key=<%= ENV['EPAYCO_PUBLIC_KEY'] %>
+    data-epayco-amount="50000" 
+    data-epayco-name="Vestido Mujer Primavera" 
+    data-epayco-description="Vestido Mujer Primavera"
+    data-epayco-invoice=<%= ENV['EPAYCO-INVOICE'] %>
+    data-epayco-currency="cop" 
+    data-epayco-country="co" 
+    data-epayco-test="true"
+    data-epayco-response="https://brainsapi.herokuapp.com/respuesta" 
+    data-epayco-confirmation="https://brainsapi.herokuapp.com/epay_confirmations" >
+  </script>
+</form>
