@@ -13,4 +13,8 @@ class StaticPagesController < ActionController::Base
   def invalid_activation_token
   end
 
+  def respuesta
+    
+  end
+
 end
