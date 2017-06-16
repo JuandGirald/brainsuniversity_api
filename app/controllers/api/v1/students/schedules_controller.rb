@@ -42,7 +42,10 @@ module Api::V1
     end
 
     def update
-      if @schedule.update_attributes(schedule_params)
+      if params[:schedule][:status]
+        @schedule.send(params[:schedule][:status] + '!') 
+        render json: @schedule, serializer: ScheduleSerializer
+      elsif @schedule.update_attributes(schedule_params)
         render json: @schedule, serializer: ScheduleSerializer
       else
         render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity

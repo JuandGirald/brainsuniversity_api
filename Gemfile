@@ -82,4 +82,5 @@ gem 'sendgrid-ruby'
 # Scheduler 
 gem 'whenever', :require => false
 
-
+# State Machine
+gem 'aasm'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519023643) do
+ActiveRecord::Schema.define(version: 20170615010942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,20 @@ ActiveRecord::Schema.define(version: 20170519023643) do
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer  "schedule_id"
+    t.string   "number"
+    t.decimal  "total"
+    t.string   "hour"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "completed_at"
+    t.string   "currency"
+    t.string   "status",       default: "3", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.date     "dob"
     t.string   "phone"
@@ -118,22 +132,26 @@ ActiveRecord::Schema.define(version: 20170519023643) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                             null: false
+    t.string   "email",                                       null: false
     t.string   "crypted_password"
     t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
-    t.string   "role",              default: "3",   null: false
+    t.string   "role",                        default: "3",   null: false
     t.string   "type"
     t.string   "password_digest"
+    t.string   "activation_state"
+    t.string   "activation_token"
+    t.datetime "activation_token_expires_at"
     t.string   "activation_digest"
-    t.boolean  "activated",         default: false
+    t.boolean  "activated",                   default: false
     t.datetime "activated_at"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "status"
-    t.text     "subjects",          default: [],                 array: true
+    t.text     "subjects",                    default: [],                 array: true
+    t.index ["activation_token"], name: "index_users_on_activation_token", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
