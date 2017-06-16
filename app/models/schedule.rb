@@ -1,5 +1,6 @@
 class Schedule < ApplicationRecord
-  before_create :set_default_status 
+  include AASM
+  # before_create :set_default_status 
   before_validation :set_free_duration
 
   belongs_to :teacher, inverse_of: :schedules
@@ -7,6 +8,7 @@ class Schedule < ApplicationRecord
 
   belongs_to :student, inverse_of: :schedules
   has_one :room, inverse_of: :schedule
+  has_one :order
   delegate :email, to: :student, prefix: true
 
   validates :teacher, :student, presence: true
@@ -20,6 +22,62 @@ class Schedule < ApplicationRecord
                  canceled: '6',
                  completed: '7'
                }
+
+  # state machine methods
+  aasm :column => :status do
+    state :awaiting_tutor, :initial => true
+    state :accepted_awaiting_payment, :confirmed, :expired, :canceled,
+          :rejected, :completed
+
+    event :accepted_awaiting_payment do
+      after do
+        create_order
+      end
+      transitions :from => :awaiting_tutor, :to => :accepted_awaiting_payment
+    end
+
+    event :awaiting_tutor do
+      transitions :from => [:expired, :accepted_awaiting_payment,
+                            :canceled, :rejected], 
+                            :to => :awaiting_tutor
+    end
+    
+    event :confirmed do
+      transitions :from => [:awaiting_tutor, :accepted_awaiting_payment], :to => :confirmed
+    end
+
+    event :rejected do
+      transitions :from => [:awaiting_tutor, :accepted_awaiting_payment], :to => :rejected
+    end
+
+    event :expired do
+      transitions :from => [:awaiting_tutor, :accepted_awaiting_payment], :to => :expired
+    end
+
+    event :canceled do
+      transitions :from => [:awaiting_tutor, :accepted_awaiting_payment], :to => :canceled
+    end
+
+    event :completed do
+      transitions :from => [:confirmed], :to => :completed
+    end
+  end
+
+  def create_order
+    if self.order.nil? || self.order.total.nil?
+      order.generate_order_number
+      order.attributes = { total: calculate_order, 
+        currency: "cop", hour: (duration.to_f/600).to_s, 
+        title: "Tutoria con #{teacher.first_name} #{teacher.last_name}", 
+        description: "Tutoria personalizada dentro de la plataforma de brainstutor por #{duration.to_i/60} minutos" 
+      }
+      order.save!
+    end
+  end
+
+  def calculate_order
+    teacher.profile.rate * ( duration.to_f/3600 )
+  end
 
   # Create a room for the current schedule with
   # OpenTok credentials
