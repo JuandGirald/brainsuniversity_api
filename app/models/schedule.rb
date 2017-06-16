@@ -64,7 +64,8 @@ class Schedule < ApplicationRecord
   end
 
   def create_order
-    if self.order.nil? || self.order.total.nil?
+    if order.nil? || order.total.nil?
+      build_order if order.nil?
       order.generate_order_number
       order.attributes = { total: calculate_order, 
         currency: "cop", hour: (duration.to_f/600).to_s, 
