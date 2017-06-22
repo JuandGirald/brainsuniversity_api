@@ -46,6 +46,7 @@ module Api::V1
 
     def update
       if @schedule.update_attributes(schedule_params)
+        send_schedule_message(params[:schedule][:message], @schedule) if params[:schedule][:message]
         @schedule.send(params[:schedule][:status] + '!') if params[:schedule][:status]
         render json: @schedule, serializer: ScheduleSerializer
       else

@@ -1,6 +1,7 @@
 module Api::V1
   class Teachers::SchedulesController < ApiController
     load_and_authorize_resource
+    include MessageMethods
     include ErrorSerializer
 
     before_action :set_schedule, only: [:update, :show, :session]
@@ -35,6 +36,8 @@ module Api::V1
 
     def update
       if @schedule.update_attributes(schedule_params)
+        send_schedule_message(params[:schedule][:message], @schedule) if params[:schedule][:message]
+        @schedule.send(params[:schedule][:status] + '!') if params[:schedule][:status]
         render json: @schedule, serializer: ScheduleSerializer
       else
         render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity
@@ -43,8 +46,7 @@ module Api::V1
 
     private
       def schedule_params
-        params.require(:schedule).permit(:id, :start_at, :end_at, 
-                                         :status, :duration, :modality, 
+        params.require(:schedule).permit(:id, :start_at, :end_at, :duration, :modality, 
                                          :student_id, :teacher_id)
       end
 
