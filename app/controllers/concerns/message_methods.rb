@@ -2,6 +2,7 @@ module MessageMethods
   extend ActiveSupport::Concern
 
   def send_schedule_message(message, schedule)
+    return if message.empty?
     teacher = schedule.teacher
     student = schedule.student
     
