@@ -75,7 +75,7 @@ class Schedule < ApplicationRecord
       build_order if order.nil?
       order.generate_order_number
       order.attributes = { total: calculate_order, 
-        currency: "cop", hour: (duration.to_f/600).to_s, 
+        currency: "cop", hour: (duration.to_f/60).to_s, 
         title: "Tutoria con #{teacher.first_name} #{teacher.last_name}", 
         description: "Tutoria personalizada dentro de la plataforma de brainstutor por #{duration.to_i/60} minutos" 
       }
