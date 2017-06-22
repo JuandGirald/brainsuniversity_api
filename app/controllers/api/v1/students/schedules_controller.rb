@@ -1,6 +1,7 @@
 module Api::V1
   class Students::SchedulesController < ApiController
     include ErrorSerializer
+    include MessageMethods
     load_and_authorize_resource
 
     before_action :set_schedule, only: [:update, :show, :session]
@@ -33,19 +34,19 @@ module Api::V1
     end
 
     def create
-      @user = current_user.schedules.create(schedule_params)
-      if @user.save
-        render json: @user, serializer: ScheduleSerializer
+      @schedule = current_user.schedules.create(schedule_params)
+
+      if @schedule.save
+        send_schedule_message(params[:schedule][:message], @schedule) if params[:schedule][:message]
+        render json: @schedule, serializer: ScheduleSerializer
       else
-        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity
       end
     end
 
     def update
-      if params[:schedule][:status]
-        @schedule.send(params[:schedule][:status] + '!') 
-        render json: @schedule, serializer: ScheduleSerializer
-      elsif @schedule.update_attributes(schedule_params)
+      if @schedule.update_attributes(schedule_params)
+        @schedule.send(params[:schedule][:status] + '!') if params[:schedule][:status]
         render json: @schedule, serializer: ScheduleSerializer
       else
         render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity
@@ -54,8 +55,7 @@ module Api::V1
 
     private
       def schedule_params
-        params.require(:schedule).permit(:id, :start_at, :end_at, 
-                                         :status, :duration, :modality, 
+        params.require(:schedule).permit(:id, :start_at, :end_at, :duration, :modality, 
                                          :student_id, :teacher_id)
       end
 
