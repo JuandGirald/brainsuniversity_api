@@ -1,6 +1,6 @@
 class Schedule < ApplicationRecord
   include AASM
-  # before_create :set_default_status 
+  before_create :schedule_mailing 
   before_validation :set_free_duration
 
   belongs_to :teacher, inverse_of: :schedules
@@ -29,9 +29,11 @@ class Schedule < ApplicationRecord
     state :accepted_awaiting_payment, :confirmed, :expired, :canceled,
           :rejected, :completed
 
+    after_all_transitions :schedule_mailing
+
     event :accepted_awaiting_payment do
       after do
-        create_order
+        generate_order
       end
       transitions :from => :awaiting_tutor, :to => :accepted_awaiting_payment
     end
@@ -63,8 +65,13 @@ class Schedule < ApplicationRecord
     end
   end
 
-  def create_order
-    if order.nil? || order.total.nil?
+  def schedule_mailing
+    state = aasm.to_state || status
+    ScheduleMailer.send(state, self).deliver_now
+  end
+
+  def generate_order
+    if order.nil? || order.total.nil? || (aasm.to_state == :accepted_awaiting_payment)
       build_order if order.nil?
       order.generate_order_number
       order.attributes = { total: calculate_order, 
@@ -105,6 +112,6 @@ class Schedule < ApplicationRecord
     end
 
     def set_free_duration
-      self.duration = 15.minutes if modality == 'free'
+      self.duration = 10.minutes if modality == 'free'
     end
 end
