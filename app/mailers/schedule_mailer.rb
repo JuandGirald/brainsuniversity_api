@@ -38,13 +38,13 @@ class ScheduleMailer < ApplicationMailer
     mail to: schedule.student.email, subject: "Tutoría vencida"
   end
 
-  def confirmed
+  def confirmed(schedule)
   end
 
-  def completed  
+  def completed(schedule) 
   end
 
-  def canceled
+  def canceled(schedule)
   end
   
   private
