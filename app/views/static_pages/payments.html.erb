@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BrainsTutor - Pasarela de pago</title>
+</head>
+<body style="background-color: #1D3B4D; margin: 0; padding: 0;">
+  <header style="background-color: #ECEDEE">
+    <img style="margin: auto; display: block; max-width: 200px; margin-bottom: 70px" src="https://www.brainstutor.com/logo-brains.png" alt="Logo BrainsTutors">
+  </header>
+  <div>
+    <h1 style="text-align: center; color: white; margin-bottom: 40px; font-weight: 800">¡Gracias por estudiar a través de BrainsTutor!</h1>
+    <p style="text-align: center; font-size: 20px; color: white;">Estas a solo un paso de agendar tu tutoria.</p>
+    <p style="max-width: 700px; text-align: center; margin: auto; font-size: 20px; margin-bottom: 50px; color: white">Solo queriamos recordarte que tu pago será manejado por ePayco, una plataformas de pagos online que te garantiza tanto a ti como a nosotros total transparencia y confiabilidad en los pagos.</p>
+    <img style="margin: auto; display: block; max-width: 350px; margin-bottom: 70px;" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/epayco_pago_seguro_black.png" alt="ePayco">
+    <form style="margin: auto; display: block; text-align: center">
+      <script src="https://s3-us-west-2.amazonaws.com/epayco/v1.0/checkoutEpayco.js" 
+        class="epayco-button" 
+        data-epayco-key=<%= ENV['EPAYCO_PUBLIC_KEY'] %> 
+        data-epayco-amount=<%= @order.total.to_f %>
+        data-epayco-name=<%= @order.title %>
+        data-epayco-description=<%= @order.description %>
+        data-epayco-currency=<%= @order.currency %> 
+        data-epayco-invoice=<%= @order.number %>
+        data-epayco-country="co" 
+        data-epayco-test="true"
+        data-epayco-response="https://brainsapi.herokuapp.com/respuesta" 
+        data-epayco-confirmation="https://brainsapi.herokuapp.com/epay_confirmations" >
+      ></script>
+    </form>
+  </div>
+</body>
+</html>
