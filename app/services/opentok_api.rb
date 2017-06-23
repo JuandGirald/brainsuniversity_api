@@ -13,7 +13,7 @@ class OpentokApi
 	def get_user_token(user, schedule, sesion_id)
 		opentok.generate_token(sesion_id, {
 	    :role        => :publisher,
-	    :expire_time => Time.now.to_i + 10.minutes + schedule.duration.to_i,
+	    :expire_time => Time.now.to_i + 10.minutes + schedule.duration.to_i.minutes,
 	    :data        => "name=#{user.first_name}"
 		});
 	end
