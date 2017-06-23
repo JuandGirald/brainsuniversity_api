@@ -77,14 +77,14 @@ class Schedule < ApplicationRecord
       order.attributes = { total: calculate_order, 
         currency: "cop", hour: (duration.to_f/60).to_s, 
         title: "Tutoria con #{teacher.first_name} #{teacher.last_name}", 
-        description: "Tutoria personalizada dentro de la plataforma de brainstutor por #{duration.to_i/60} minutos" 
+        description: "Tutoria personalizada dentro de la plataforma de brainstutor por #{duration.to_i} minutos" 
       }
       order.save!
     end
   end
 
   def calculate_order
-    teacher.profile.rate * ( duration.to_f/3600 )
+    teacher.profile.rate * ( duration.to_f/60 )
   end
 
   # Create a room for the current schedule with
@@ -112,7 +112,6 @@ class Schedule < ApplicationRecord
     end
 
     def set_free_duration
-      self.duration = 10.minutes if modality == 'free'
-      self.duration = duration.to_i.minutes if modality == 'paid'
+      self.duration = "10" if modality == 'free'
     end
 end
