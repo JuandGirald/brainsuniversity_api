@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 	scope module: "api" do
 	  namespace :v1, path: "" do
 	  	namespace :teachers do
+        get '/dashboard', to: 'dashboards#index'
 	  		resources :schedules, only: [:update, :show, :index] do
 	  			get 'session', on: :member
 	  		end
