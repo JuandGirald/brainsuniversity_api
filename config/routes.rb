@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/check-status', to: 'static_pages#check_status'
   get '/respuesta', to: 'static_pages#respuesta'
   get '/cuenta-activada/:id', to: 'static_pages#thanks', as: 'activation_success'
+  get 'order/:id', to: 'static_pages#payments'
   get '/token-invalido', to: 'static_pages#invalid_activation_token'
   match "/ingresar" => redirect("#{ENV['CLIENT_URL']}/ingresar"), :as => :ingresar, via: :get
 

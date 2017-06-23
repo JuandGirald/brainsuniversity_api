@@ -6,6 +6,10 @@ class StaticPagesController < ActionController::Base
     @user = User.find(params[:id])
   end
 
+  def payments
+    @order = Order.find_by(number: params[:id])
+  end
+
   def check_status
     render json: true
   end
@@ -14,7 +18,6 @@ class StaticPagesController < ActionController::Base
   end
 
   def respuesta
-    
   end
 
 end
