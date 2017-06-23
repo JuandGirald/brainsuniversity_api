@@ -113,5 +113,6 @@ class Schedule < ApplicationRecord
 
     def set_free_duration
       self.duration = 10.minutes if modality == 'free'
+      self.duration = duration.to_i.minutes if modality == 'paid'
     end
 end
