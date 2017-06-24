@@ -3,6 +3,8 @@ class Teacher < User
   after_create  :set_bank_information_availability
   # after_update  :accepted_tutor
   
+  has_many :teacher_students
+  has_many :students, through: :teacher_students 
   has_one :profile, inverse_of: :teacher
   has_one :bank_information
   has_one :availability
