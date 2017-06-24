@@ -1,6 +1,6 @@
 class Schedule < ApplicationRecord
   include AASM
-  before_create :schedule_mailing 
+  before_create :schedule_mailing, :add_teacher_to_student
   before_validation :set_free_duration
 
   belongs_to :teacher, inverse_of: :schedules
@@ -13,6 +13,9 @@ class Schedule < ApplicationRecord
 
   validates :teacher, :student, presence: true
   validates :start_at, :duration, presence: true
+
+  scope :upcoming_teacher, -> { awaiting_tutor + confirmed.where("start_at > ?", Date.today) }
+  scope :upcoming_student, -> { accepted_awaiting_payment + confirmed.where("start_at > ?", Date.today) }
 
   enum status: { awaiting_tutor: '1', 
                  accepted_awaiting_payment: '2',
@@ -107,8 +110,9 @@ class Schedule < ApplicationRecord
   
   private
 
-    def set_default_status
-      self.status = 'awaiting_tutor'
+    def add_teacher_to_student
+      student.teachers << teacher
+      student.save
     end
 
     def set_free_duration
