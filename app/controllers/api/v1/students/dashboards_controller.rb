@@ -4,7 +4,11 @@ module Api::V1
       @teachers = current_user.teachers.joins(:profile).
                                         select(:id, :email, :first_name, :last_name,
                                                :university, :rate, :subjects)
-      render :json => { :schedules => current_user.schedules.upcoming_student, 
+      @schedules = current_user.schedules.
+                   joins(:teacher).
+                   select_fields.
+                   upcoming_student                                      
+      render :json => { :schedules => @schedules, 
                         :teachers => @teachers }
     end
   end
