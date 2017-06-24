@@ -112,8 +112,10 @@ class Schedule < ApplicationRecord
   private
 
     def add_teacher_to_student
-      student.teachers << teacher
-      student.save
+      unless student.teachers.include?(teacher)
+        student.teachers << teacher 
+        student.save
+      end
     end
 
     def set_free_duration
