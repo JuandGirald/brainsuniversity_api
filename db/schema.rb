@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170624174742) do
+ActiveRecord::Schema.define(version: 20170624214127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(version: 20170624174742) do
   create_table "chats", force: :cascade do |t|
     t.integer  "sender_id"
     t.integer  "recipient_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "readed",       default: false
     t.index ["recipient_id"], name: "index_chats_on_recipient_id", using: :btree
     t.index ["sender_id"], name: "index_chats_on_sender_id", using: :btree
   end
@@ -65,8 +66,9 @@ ActiveRecord::Schema.define(version: 20170624174742) do
     t.text     "body"
     t.integer  "chat_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "readed",     default: false
     t.index ["chat_id"], name: "index_messages_on_chat_id", using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end

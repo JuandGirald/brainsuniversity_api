@@ -1,6 +1,6 @@
 class ChatSerializer < ActiveModel::Serializer
 	attributes :id, :sender_id, :recipient_id, :recipient_email, :sender_email, 
-						 :sender_name, :recipient_name, :last_message
+						 :sender_name, :recipient_name, :last_message, :readed, :updated_at
 
 	#Displays sender's message full name
 	def sender_name
