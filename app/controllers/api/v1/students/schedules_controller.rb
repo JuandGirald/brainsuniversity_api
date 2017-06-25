@@ -25,7 +25,7 @@ module Api::V1
                        token: @schedule.room.student_token
                      }
       else
-        render json: { error: "Tu tutoria no estará disponible hasta el: #{@schedule.start_at}" }
+        render json: { error: "Tu tutoria no estará disponible hasta el: #{@schedule.start_at.to_formatted_s(:short)}" }
       end
     end
 
