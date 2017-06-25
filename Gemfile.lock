@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/rails/jbuilder.git
+  revision: eb5d37636fe3d7b2e3f01202ba3fd74693e1405e
+  specs:
+    jbuilder (2.7.0)
+      activesupport (>= 4.2.0)
+      multi_json (>= 1.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -79,9 +87,6 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.8.0)
-    jbuilder (2.6.0)
-      activesupport (>= 3.0.0, < 5.1)
-      multi_json (~> 1.2)
     json (1.8.6)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
@@ -233,7 +238,7 @@ DEPENDENCIES
   delayed_job_active_record
   factory_girl_rails
   ffaker
-  jbuilder (~> 2.5)
+  jbuilder!
   jwt
   listen (~> 3.0.5)
   opentok (~> 2.3)
