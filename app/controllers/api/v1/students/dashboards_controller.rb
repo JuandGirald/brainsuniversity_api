@@ -13,6 +13,7 @@ module Api::V1
                               joins(:messages, :recipient).
                               distinct.
                               select(:id, :first_name, :last_name, :email, "chats.readed", "chats.updated_at")
+      render 'api/v1/students/dashboards/index.json.jbuilder'                              
     end
   end
 end
