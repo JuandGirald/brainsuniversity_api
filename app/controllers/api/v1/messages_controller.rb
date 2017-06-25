@@ -3,6 +3,7 @@ module Api::V1
     
     def index
       @chat = Chat.find(params[:chat_id])
+      @chat.check_unread_messages(current_user)
       render json: @chat.messages
     end
 
@@ -17,7 +18,7 @@ module Api::V1
       @message.user_id = current_user.id
       
       if @message.save!
-          render json: @message
+        render json: @message
       else
         render json: @message.errors
       end

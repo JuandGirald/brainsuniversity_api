@@ -16,7 +16,8 @@ class Schedule < ApplicationRecord
 
   scope :upcoming_teacher, -> { awaiting_tutor + confirmed.where("start_at > ?", Date.today) }
   scope :upcoming_student, -> { accepted_awaiting_payment + confirmed.where("start_at > ?", Date.today) }
-  scope :select_fields, -> { select(:id, :status, :start_at, :modality, :duration, :first_name, :last_name, :email) }
+  scope :select_fields, -> { select(:id, :status, :start_at, :modality, 
+                                    :duration, :first_name, :last_name, :email) }
 
   enum status: { awaiting_tutor: '1', 
                  accepted_awaiting_payment: '2',

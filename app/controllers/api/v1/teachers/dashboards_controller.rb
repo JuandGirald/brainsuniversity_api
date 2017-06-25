@@ -8,8 +8,11 @@ module Api::V1
                    joins(:student).
                    select_fields.
                    upcoming_teacher
-      render :json => { :schedules => @schedules, 
-                        :students => @students }
+      @messages = current_user.current_chats.
+                              unread.
+                              joins(:messages, :sender).
+                              distinct.
+                              select(:id, :first_name, :last_name, :email, "chats.readed", "chats.updated_at")
     end
   end
 end

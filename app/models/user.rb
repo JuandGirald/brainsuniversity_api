@@ -58,6 +58,7 @@ class User < ApplicationRecord
 
 	def current_chats
 		self.chats.empty? ? self.chats_recipients : self.chats
+    # (self.chats_recipients + self.chats).sort! { |a,b| b.updated_at <=> a.updated_at }
 	end
 
 	# Check Unactives teachers users

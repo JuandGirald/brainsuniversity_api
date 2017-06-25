@@ -10,8 +10,16 @@ class Chat < ApplicationRecord
   #   where("conversations.sender_id =? OR conversations.recipient_id =?",user.id,user.id)
   # end
 
+  scope :unread, -> { where(readed: false) }
   scope :between, -> (sender_id,recipient_id) do
     where("(chats.sender_id = ? AND chats.recipient_id =?) 
       OR (chats.sender_id = ? AND chats.recipient_id =?)", sender_id,recipient_id, recipient_id, sender_id)
+  end
+
+  def check_unread_messages(current_user)
+    if current_user != messages.last.user
+      messages.unread.update_all(readed: true)
+      self.update_attributes(readed: true)
+    end
   end
 end
