@@ -8,4 +8,4 @@ json.messages @messages.each do |message|
                   :email, :readed, :updated_at)
   json.last_message message.messages.last.body
 end
-json.(@students, :student)
+json.students @students
