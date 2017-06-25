@@ -112,7 +112,7 @@ class Schedule < ApplicationRecord
   private
 
     def add_teacher_to_student
-      unless student.teachers.include?(teacher)
+      if !student.teachers.include?(teacher)
         student.teachers << teacher 
         student.save
       end
