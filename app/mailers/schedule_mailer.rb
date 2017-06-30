@@ -33,7 +33,7 @@ class ScheduleMailer < ApplicationMailer
     mail to: schedule.student.email, subject: "Tutoría rechazada"
   end
 
-  def expired
+  def expired(schedule)
     email_params(schedule)
     mail to: schedule.student.email, subject: "Tutoría vencida"
   end
