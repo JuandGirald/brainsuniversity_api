@@ -1,7 +1,7 @@
 json.schedules @schedules.each do  |schedule|
   json.(schedule, :id, :status, :modality, 
                   :duration, :first_name, :last_name, :email)
-  json.teacher_id Schedule.find(schedule.id).student.id
+  json.student_id Schedule.find(schedule.id).student.id
   json.start_at schedule.start_at.to_formatted_s(:short)
   json.order Schedule.find(schedule.id).order
 end
