@@ -3,7 +3,7 @@
 <p>Hola <%= @student.first_name %>,</p>
 
 <p>
-  Solicitaste una tutoría para el día @schedule.start_at, pero esta se ha vencido antes que el tutor tuviera el chance de responder. 
+  Solicitaste una tutoría para el día <%= @schedule.start_at.to_formatted_s(:short) %>, pero esta se ha vencido antes que el tutor tuviera el chance de responder. 
 </p>
 <p>
   Puedes ingresar a tu cuenta y re-agendar la tutoría en otra hora o enviarle un mensaje directamente desde su pefil preguntando sus horas disponibles, ten en cuenta siempre el horario de disponibilidad del tutor que aparece en su perfil.
