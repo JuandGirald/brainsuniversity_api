@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170624214127) do
+ActiveRecord::Schema.define(version: 20170728191142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,17 @@ ActiveRecord::Schema.define(version: 20170624214127) do
     t.boolean  "readed",       default: false
     t.index ["recipient_id"], name: "index_chats_on_recipient_id", using: :btree
     t.index ["sender_id"], name: "index_chats_on_sender_id", using: :btree
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string   "code"
+    t.text     "description"
+    t.integer  "limit"
+    t.integer  "amount"
+    t.date     "valid_from"
+    t.date     "valid_until"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -141,6 +152,16 @@ ActiveRecord::Schema.define(version: 20170624214127) do
     t.string   "status"
     t.index ["student_id"], name: "index_schedules_on_student_id", using: :btree
     t.index ["teacher_id"], name: "index_schedules_on_teacher_id", using: :btree
+  end
+
+  create_table "student_coupons", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "coupon_id"
+    t.boolean  "redeemed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_student_coupons_on_coupon_id", using: :btree
+    t.index ["student_id"], name: "index_student_coupons_on_student_id", using: :btree
   end
 
   create_table "teacher_students", force: :cascade do |t|
