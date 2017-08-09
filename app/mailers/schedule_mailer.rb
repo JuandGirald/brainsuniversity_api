@@ -39,6 +39,8 @@ class ScheduleMailer < ApplicationMailer
   end
 
   def confirmed(schedule)
+    email_params(schedule)
+    mail to: schedule.student.email, subject: "Tutoría confirmada"
   end
 
   def completed(schedule) 
