@@ -1,5 +1,7 @@
 class Message < ApplicationRecord
-  before_save :unread_chat
+  include ActionView::Helpers::DateHelper
+  
+  before_save :unread_chat, :send_message_email
   belongs_to :chat
   belongs_to :user
 
@@ -9,5 +11,21 @@ class Message < ApplicationRecord
 
   def unread_chat
     chat.update_attributes(readed: false)
+  end
+
+  def send_message_email
+    regex = /minute/
+    t = distance_of_time_in_words(chat.messages.last(2).first.created_at, Time.now)
+
+    recipient = get_email_recipient
+
+    if !(regex =~ t).nil?  && t.to_i >= 10
+      MessageMailer.inbox(self, recipient).deliver_now
+    end
+  end
+
+  # get the email recipient
+  def get_email_recipient
+    user == chat.sender ? chat.recipient : chat.sender
   end
 end

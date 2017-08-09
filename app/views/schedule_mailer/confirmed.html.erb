@@ -1,0 +1,20 @@
+<h1>BrainsTutor</h1>
+
+<p>Hola <%= @student.first_name %>,</p>
+
+<p>
+  Tu tutoría para el día <%= @schedule.start_at.to_formatted_s(:short) %> con el tutor @teacher.first_name ha sido confirmada. 
+</p>
+<p>
+  10 minutos antes de  <%= @schedule.start_at.to_formatted_s(:short) %>, se te habilitará un link para ingresar a nuestro "salón de clases", ahí podras tener tu tutoría online con el tutor que elegiste.
+</p>
+<p>
+  Para acceder al link debes ingresar con tu cuenta, ir a la sección de "Tutorias Agendadas", filtrar por "confirmadas" y podrás ver un botón en tu tutoría que dice "entrar al salón de clases".
+</p>
+<p>
+  Cualquier inquietud que tengas puedes escribirnos a: info@brainsuniversity.com o llamarnos al 3043907490.
+</p>
+<a target="_blank" href="https://www.brainstutor.com/estudiantes/ingresar">
+  Ingresar como Estudiante
+</a>
+
