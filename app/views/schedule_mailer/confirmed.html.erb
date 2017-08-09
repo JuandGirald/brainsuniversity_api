@@ -3,7 +3,7 @@
 <p>Hola <%= @student.first_name %>,</p>
 
 <p>
-  Tu tutoría para el día <%= @schedule.start_at.to_formatted_s(:short) %> con el tutor @teacher.first_name ha sido confirmada. 
+  Tu tutoría para el día <%= @schedule.start_at.to_formatted_s(:short) %> con el tutor <%= @teacher.first_name %> ha sido confirmada. 
 </p>
 <p>
   10 minutos antes de  <%= @schedule.start_at.to_formatted_s(:short) %>, se te habilitará un link para ingresar a nuestro "salón de clases", ahí podras tener tu tutoría online con el tutor que elegiste.
