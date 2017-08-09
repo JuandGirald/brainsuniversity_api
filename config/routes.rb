@@ -25,6 +25,9 @@ Rails.application.routes.draw do
         resources :schedules, only: [:create, :update, :show, :index] do
           get 'session', on: :member
         end
+        resources :coupons, only: [:index] do
+          post 'apply', on: :collection
+        end
       end
       resources :users
       resources :teachers, only: [:create, :update, :show, :index]
