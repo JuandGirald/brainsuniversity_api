@@ -15,9 +15,11 @@ class Message < ApplicationRecord
 
   def send_message_email
     regex = /minute/
-    t = distance_of_time_in_words(chat.messages.last(2).first.created_at, Time.now)
-
     recipient = get_email_recipient
+
+    return MessageMailer.inbox(self, recipient).deliver_now if Chat.last.messages.last(2).empty?
+    
+    t = distance_of_time_in_words(chat.messages.last(2).first.created_at, Time.now)
 
     if !(regex =~ t).nil?  && t.to_i >= 10
       MessageMailer.inbox(self, recipient).deliver_now
