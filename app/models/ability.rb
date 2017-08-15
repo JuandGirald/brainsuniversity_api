@@ -15,6 +15,7 @@ class Ability
     elsif user.student?
       can :create, Schedule
       can :session, Schedule
+      can :apply_promo, Schedule
       can [:update, :read], Schedule, student: user
       can :read, Teacher do |user|
         user.status == 'complete'

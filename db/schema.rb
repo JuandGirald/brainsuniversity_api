@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728191142) do
+ActiveRecord::Schema.define(version: 20170815005838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,8 +54,9 @@ ActiveRecord::Schema.define(version: 20170728191142) do
     t.integer  "amount"
     t.date     "valid_from"
     t.date     "valid_until"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "coupon_type", default: "1"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -158,8 +159,9 @@ ActiveRecord::Schema.define(version: 20170728191142) do
     t.integer  "student_id"
     t.integer  "coupon_id"
     t.boolean  "redeemed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "schedule_id"
     t.index ["coupon_id"], name: "index_student_coupons_on_coupon_id", using: :btree
     t.index ["student_id"], name: "index_student_coupons_on_student_id", using: :btree
   end

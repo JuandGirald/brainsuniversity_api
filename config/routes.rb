@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         resources :dashboards, only: [:index]
         resources :schedules, only: [:create, :update, :show, :index] do
           get 'session', on: :member
+          post 'apply_promo', on: :member
         end
         resources :coupons, only: [:index] do
           post 'apply', on: :collection
