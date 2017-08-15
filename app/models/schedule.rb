@@ -9,6 +9,8 @@ class Schedule < ApplicationRecord
   belongs_to :student, inverse_of: :schedules
   has_one :room, inverse_of: :schedule
   has_one :order
+  has_one :student_coupon
+  has_one :coupon, through: :student_coupon
   delegate :email, to: :student, prefix: true
 
   validates :teacher, :student, presence: true
@@ -108,6 +110,23 @@ class Schedule < ApplicationRecord
                 student_token: student_token,
                 session_id: session.session_id
                )
+  end
+
+  def apply_coupon(student_coupon)
+    case student_coupon.coupon.coupon_type
+    when "time"
+      if duration.to_i == student_coupon.coupon.amount
+        self.student_coupon = student_coupon
+        student_coupon.update_attributes(redeemed: true)
+        order.aceptada! # accept order, not payment asociated 
+        confirmed!
+        self.save!
+      else
+        errors.add(:coupon, "Solo valido para tutorias de #{duration} minutos")
+      end
+    when "percentage"
+    when "amount"
+    end
   end
   
   private

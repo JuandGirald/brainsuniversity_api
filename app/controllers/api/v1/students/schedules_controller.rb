@@ -4,7 +4,7 @@ module Api::V1
     include MessageMethods
     load_and_authorize_resource
 
-    before_action :set_schedule, only: [:update, :show, :session]
+    before_action :set_schedule, only: [:update, :show, :session, :apply_promo]
 
     def index
       page = params[:page].present? ? params[:page] : 1 
@@ -49,6 +49,17 @@ module Api::V1
         send_schedule_message(params[:schedule][:message], @schedule) if params[:schedule][:message]
         @schedule.send(params[:schedule][:status] + '!') if params[:schedule][:status]
         render json: @schedule, serializer: ScheduleSerializer
+      else
+        render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity
+      end
+    end
+
+    def apply_promo
+      @student_coupon = current_user.student_coupons.find_student_coupon(params[:coupon_id])
+
+      @schedule.apply_coupon(@student_coupon) if @student_coupon
+      if !@schedule.errors.present?
+        render json: { coupons: "YAY! Promoción aplicada con éxito! ", status: :success } 
       else
         render json: ErrorSerializer.serialize(@schedule.errors), status: :unprocessable_entity
       end
