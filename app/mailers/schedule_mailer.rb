@@ -12,7 +12,7 @@ class ScheduleMailer < ApplicationMailer
     personalization.to = Email.new(email: schedule.teacher.email )
     personalization.substitutions = Substitution.new(key: '-name-', value: schedule.teacher.first_name)
     personalization.substitutions = Substitution.new(key: '-modality-', value: schedule.modality)
-    personalization.substitutions = Substitution.new(key: '-date-', value: schedule.start_at)
+    personalization.substitutions = Substitution.new(key: '-date-', value: schedule.start_at.to_formatted_s(:short))
     
     mail = setup_mail('Tutoría Agendada', 'c9d81e0b-99cf-4849-af00-3110e2934e88', personalization)
     sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
