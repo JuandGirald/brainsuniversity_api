@@ -122,7 +122,7 @@ class Schedule < ApplicationRecord
         confirmed!
         self.save!
       else
-        errors.add(:coupon, "Solo valido para tutorias de #{duration} minutos")
+        errors.add(:coupon, "Solo valido para tutorias de #{student_coupon.coupon.amount} minutos")
       end
     when "percentage"
     when "amount"
