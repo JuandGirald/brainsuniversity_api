@@ -3,7 +3,11 @@ module Api::V1
 
     # retreive all active curren user coupons for current_user
     def index
-      @coupons = current_user.coupons.valid  
+      @coupons = current_user
+                 .student_coupons
+                 .joins(:coupon)
+                 .valid
+                 .map(&:coupon)
 
       render json: @coupons
     end
