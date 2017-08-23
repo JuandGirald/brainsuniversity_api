@@ -26,7 +26,8 @@ module Api::V1
                        sessionId: @schedule.room.session_id,
                        token: @schedule.room.teacher_token,
                        duration: @schedule.duration.to_i * 60,
-                       start_at: @schedule.start_at
+                       start_at: @schedule.start_at,
+                       schedule_id: @schedule.id
                      }
       else
         render json: { error: "Tu tutoria no estará disponible hasta el: #{@schedule.start_at.to_formatted_s(:short)}" }
