@@ -22,7 +22,8 @@ module Api::V1
       if @schedule.room.present?
         render json: { apikey: ENV['OPENTOK_API_KEY'],
                        sessionId: @schedule.room.session_id,
-                       token: @schedule.room.student_token
+                       token: @schedule.room.student_token,
+                       duration: @schedule.duration.to_i * 60
                      }
       else
         render json: { error: "Tu tutoria no estará disponible hasta el: #{@schedule.start_at.to_formatted_s(:short)}" }
