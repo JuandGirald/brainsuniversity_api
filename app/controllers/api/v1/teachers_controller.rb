@@ -30,7 +30,7 @@ module Api::V1
       @user = Teacher.new(teacher_params)
 
       if @user.save
-        UserMailer.account_activation(@user).deliver_now
+        UserMailer.account_activation(@user).deliver_later
         render json: @user
       else
         render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
