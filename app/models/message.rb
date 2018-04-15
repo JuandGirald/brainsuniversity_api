@@ -1,7 +1,8 @@
 class Message < ApplicationRecord
   include ActionView::Helpers::DateHelper
   
-  before_save :unread_chat, :send_message_email
+  before_save :unread_chat
+  after_save :send_message_email
   belongs_to :chat
   belongs_to :user
 
