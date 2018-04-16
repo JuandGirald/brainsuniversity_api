@@ -17,12 +17,12 @@ class Message < ApplicationRecord
     regex = /minute/
     recipient = get_email_recipient
 
-    return MessageMailer.inbox(self, recipient).deliver_later if Chat.last.messages.last(2).empty?
+    return MessageMailer.inbox(self, recipient).deliver_now if Chat.last.messages.last(2).empty?
     
     t = distance_of_time_in_words(chat.messages.last(2).first.created_at, Time.now)
 
     if !(regex =~ t).nil?  && t.to_i >= 10
-      MessageMailer.inbox(self, recipient).deliver_later
+      MessageMailer.inbox(self, recipient).deliver_now
     end
   end
 

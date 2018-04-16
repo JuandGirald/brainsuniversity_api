@@ -23,14 +23,14 @@ class Teacher < User
   #
   def schedule_step
     self.waiting!
-    UserMailer.schedule_step(self).deliver_later
+    UserMailer.schedule_step(self).deliver_now
   end
 
   # send email when a tutor is accepted
   # 
   def accepted_tutor
     if waiting?
-      UserMailer.accepted_tutor(self).deliver_later if waiting?
+      UserMailer.accepted_tutor(self).deliver_now if waiting?
       self.accepted!
     end
   end

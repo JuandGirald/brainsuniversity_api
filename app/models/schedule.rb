@@ -74,7 +74,7 @@ class Schedule < ApplicationRecord
 
   def schedule_mailing
     state = aasm.to_state || status
-    ScheduleMailer.send(state, self).deliver_later
+    ScheduleMailer.send(state, self).deliver_now
   end
 
   def generate_order
